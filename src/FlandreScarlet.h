@@ -6,7 +6,7 @@
 #include"Instruction.h"
 //Ü½À¼¶äÂ¶
 class Infomanager;
-class FlandreScarlet :public Object, std::enable_shared_from_this<FlandreScarlet>
+class FlandreScarlet :public Object,public std::enable_shared_from_this<FlandreScarlet>
 {
 private:
 	static const int mHpLimit = 10;         //ÑªÁ¿ÉÏÏŞ
