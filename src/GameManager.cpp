@@ -27,12 +27,29 @@ void GameManager::update()
 	{
 		//std::cout << maid.use_count() <<std:: endl; Êä³ö3
 		maid->update(mInfoManager);
+		/**
 		std::cout << "nameless maid"<<std::endl;
 		std::cout << "Pos:" << maid->getPos() << std::endl;
 		std::cout << "Hp:" << maid->getHp() << std::endl;
 		std::cout << "State:" << maidStateOutput[(int)maid->getState()] << std::endl;
 		std::cout << "Instruction:" << instructionOutput[(int)maid->getInstructionType()] << std::endl;
 		std::cout<<std::endl;
+		**/
+		//update info
+		info.clear();
+		info.push_back("nameless maid");
+		char position[100], hp[100], state[100], instruction[100];
+		sprintf_s(position, "Pos:%d", maid->getPos());
+		sprintf_s(hp, "Hp:%d", maid->getHp());
+		sprintf_s(state, "State:%s", maidStateOutput[(int)maid->getState()].c_str());
+		sprintf_s(instruction, "Instruction:%s", instructionOutput[(int)maid->getInstructionType()].c_str());
+		info.push_back(position);
+		info.push_back(hp);
+		info.push_back(state);
+		info.push_back(instruction);
+
+
+
 		if (maid->dead())
 		{
 			deadMaid.push_back(maid);
@@ -43,3 +60,11 @@ void GameManager::update()
 	for (auto& maid : deadMaid)
 		maidSet->erase(maid);
 }
+
+std::vector<std::string> GameManager::getInfo()
+{
+	return info;
+}
+
+GameManager::GameManager()
+{}
