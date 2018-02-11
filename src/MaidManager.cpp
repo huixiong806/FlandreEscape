@@ -20,6 +20,11 @@ void MaidManager::addNewMaid(int pos)
 	mMaidSet->insert(maid);
 	mMap->getVertex(pos).addMaid(maid);
 }
+void MaidManager::deleteMaid(std::shared_ptr<Maid> maid)
+{
+	mMap->getVertex(maid->getPos()).deleteMaid(maid);
+	mMaidSet->erase(maid);
+}
 void MaidManager::turnOnAlert()
 {
 	*mAlertIsOn = true;
@@ -42,6 +47,8 @@ void MaidManager::update()
 {
 	//以下为测试代码
 	//对于所有女仆
+	if (mMaidSet->empty())
+		this->addNewMaid(1);
 	for (auto& maid : *mMaidSet)
 	{
 		//如果哪个闲着

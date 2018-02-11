@@ -19,9 +19,10 @@ void GameManager::loadGame(std::string fileName)
 void GameManager::update()
 {
 	//maid manager执行回合操作
-	mMaidManager->update();
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maidSet = mMaidManager->getMaidSetPtr();
+	mMaidManager->update();
 	std::vector<std::shared_ptr<Maid>>deadMaid;
+	std::cout << "MaidCount:" << maidSet->size() << std::endl;
 	//每个女仆执行回合操作
 	for (auto& maid : *maidSet)
 	{
@@ -31,6 +32,10 @@ void GameManager::update()
 		std::cout << "Pos:" << maid->getPos() << std::endl;
 		std::cout << "Hp:" << maid->getHp() << std::endl;
 		std::cout << "State:" << maidStateOutput[(int)maid->getState()] << std::endl;
+		std::cout << "WayPoint:";
+		auto wayPoint = maid->getWayPoint();
+		for (auto i : wayPoint)std::cout <<i.pos << ",";
+		std::cout << std::endl;
 		std::cout << "Instruction:" << instructionOutput[(int)maid->getInstructionType()] << std::endl;
 		std::cout<<std::endl;
 		if (maid->dead())
@@ -41,5 +46,5 @@ void GameManager::update()
 	}
 	//删除死亡的女仆
 	for (auto& maid : deadMaid)
-		maidSet->erase(maid);
+		mMaidManager->deleteMaid(maid);
 }
