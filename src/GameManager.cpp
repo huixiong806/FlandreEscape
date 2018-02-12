@@ -36,6 +36,7 @@ void GameManager::update()
 		std::cout<<std::endl;
 		**/
 		//update info
+		/*
 		info.clear();
 		info.push_back("nameless maid");
 		char position[100], hp[100], state[100], instruction[100];
@@ -47,7 +48,18 @@ void GameManager::update()
 		info.push_back(hp);
 		info.push_back(state);
 		info.push_back(instruction);
-
+		*/
+		// Test new log class
+		logger.add("nameless maid");
+		char position[100], hp[100], state[100], instruction[100];
+		sprintf_s(position, "Pos:%d", maid->getPos());
+		sprintf_s(hp, "Hp:%d", maid->getHp());
+		sprintf_s(state, "State:%s", maidStateOutput[(int)maid->getState()].c_str());
+		sprintf_s(instruction, "Instruction:%s", instructionOutput[(int)maid->getInstructionType()].c_str());
+		logger.add(position);
+		logger.add(hp);
+		logger.add(state);
+		logger.add(instruction);
 
 
 		if (maid->dead())
@@ -61,9 +73,9 @@ void GameManager::update()
 		maidSet->erase(maid);
 }
 
-std::vector<std::string> GameManager::getInfo()
+Log& GameManager::getLog()
 {
-	return info;
+	return logger;
 }
 
 GameManager::GameManager()

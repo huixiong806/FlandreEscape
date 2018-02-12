@@ -4,8 +4,10 @@
 #include<SDL.h>
 #include<SDL_ttf.h>
 #include<vector>
+#include"Log.hpp"
+#include"Toolset.hpp"
 using namespace std;
-const int interval = 14;
+const int interval = 1;
 shared_ptr<GameManager>game;
 int main(int argc, char ** argv)
 {
@@ -19,10 +21,10 @@ int main(int argc, char ** argv)
 	game = make_shared<GameManager>();
 	game->loadGame("test.txt");
 	
-	TTF_Font * font = TTF_OpenFont("C:\\Users\\axunl\\source\\repos\\FlandreEscape\\consola.ttf", 20);
+	TTF_Font * font = TTF_OpenFont("C:\\Users\\axunl\\source\\repos\\FlandreEscape\\consola.ttf", 12);
 	SDL_Texture * text;
 	SDL_Surface * maidStateDisplay;
-	SDL_Color textColor = { 255, 0, 0 };
+	SDL_Color textColor = { 255 , 255 , 255 };
 	SDL_Rect pos = { 10, 100, 200, 20 }, clip;
 
 	/// Main event loop
@@ -44,19 +46,10 @@ int main(int argc, char ** argv)
 				}
 			}
 		}
-		auto message = game->getInfo();
+		auto message = game->getLog().getLast(15);
 		pos.y = 100;
 		SDL_RenderClear(renderer);
-		for (auto i : message)
-		{
-			maidStateDisplay = TTF_RenderText_Blended(font, i.c_str(), textColor);
-			text = SDL_CreateTextureFromSurface(renderer, maidStateDisplay);
-			SDL_QueryTexture(text, NULL, NULL, &pos.w, &pos.h);
-			SDL_RenderCopy(renderer, text, NULL, &pos);
-			pos.y += interval;
-			SDL_FreeSurface(maidStateDisplay);
-			SDL_DestroyTexture(text);
-		}
+		RenderText(renderer, message, font, textColor);
 		SDL_RenderPresent(renderer);
 	}
 	SDL_DestroyRenderer(renderer);
