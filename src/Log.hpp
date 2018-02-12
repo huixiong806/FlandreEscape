@@ -38,7 +38,7 @@ public:
 			return history[i];
 		return "";
 	}
-	int getSize()
+	size_t getSize()
 	{
 		return history.size();
 	}
