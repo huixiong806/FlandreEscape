@@ -8,10 +8,10 @@ GameManager::GameManager()
 }
 void GameManager::loadGame(std::string fileName)
 {
-	mMap = std::make_shared<Map>(3,3);
+	mMap = std::make_shared<Map>(8,8);
 	mFlan = std::make_shared<FlandreScarlet>();
 	mLogger = std::make_shared<Log>();
-	mMaidManager = std::make_shared<MaidManager>(this->mMap);
+	mMaidManager = std::make_shared<MaidManager>();
 	InfoManager::bind(mMaidManager->getMaidSetPtr());
 	InfoManager::bind(mMaidManager->getAlertPtr());
 	InfoManager::bind(this->mFlan);

@@ -10,6 +10,7 @@ Maid::Maid(int pos)
 	this->setName(maidName[rand()%12]);
 	this->mState = MaidState::STOP;
 	this->mCurInstruction = Instruction(InstructionType::NUL,std::vector<int>());
+	mSpeed = 2.0;
 }
 Maid::Maid()
 {
@@ -20,6 +21,7 @@ Maid::Maid()
 	this->setName(maidName[rand() % 12]);
 	this->mState = MaidState::STOP;
 	this->mCurInstruction = Instruction(InstructionType::NUL, std::vector<int>());
+	mSpeed = 2.0;
 }
 Maid::~Maid()
 {
@@ -158,12 +160,14 @@ MaidInfoType Maid::update()
 			}
 			else
 			{
+				//移动
 				WayPoint target = mWayPoint.front();
-				Vec2d newCoord = mCoord + InfoManager::getTheDirectionTo(mCoord, target.pos)*mSpeed;
-				this->setCoord(newCoord);
+				this->walk(InfoManager::getTheDirectionTo(mCoord, target.pos));
+				//到达目标路径点
 				if (InfoManager::getPosByCoord(mCoord) == target.pos&&InfoManager::inMid(mCoord, target.pos,0.3))
 				{
 					mWayPoint.pop_front();
+					//循环路径点重新加入队尾
 					if (target.type == WayPointType::LOOP)
 						mWayPoint.push_back(target);
 					InfoManager::moveTo(getSelf(), target.pos);
@@ -191,4 +195,3 @@ MaidInfoType Maid::update()
 	}
 	return MaidInfoType::NUL;
 }
-const double Maid::mSpeed = 2.0;  //每tick移动的距离

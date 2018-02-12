@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 	SDL_Texture * ground = IMG_LoadTexture(renderer, (AP + "\\box.tga").c_str()),
 		*oscar = IMG_LoadTexture(renderer, (AP + "\\oscar.png").c_str());
 	SDL_Rect oscarLocation = { 300, 10, 0, 0 };
-	SDL_QueryTexture(oscar, NULL, NULL, &oscarLocation.w, &oscarLocation.h);
+	//SDL_QueryTexture(oscar, NULL, NULL, &oscarLocation.w, &oscarLocation.h);
 
 
 	/// Main event loop

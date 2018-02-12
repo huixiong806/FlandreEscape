@@ -6,21 +6,15 @@ MaidManager::MaidManager()
 	mMaidSet = std::make_shared<std::unordered_set<std::shared_ptr<Maid>>>();
 	
 }
-MaidManager::MaidManager(std::shared_ptr<Map> map)
-{
-	mAlertIsOn = std::make_shared<bool>(false);
-	mMaidSet = std::make_shared<std::unordered_set<std::shared_ptr<Maid>>>();
-	this->bindMap(map);
-}
 void MaidManager::addNewMaid(int pos)
 {
 	std::shared_ptr<Maid> maid = std::make_shared<Maid>(pos);
 	mMaidSet->insert(maid);
-	mMap->getVertex(pos).addMaid(maid);
+	InfoManager::getMap()->getVertex(pos).addMaid(maid);
 }
 void MaidManager::deleteMaid(std::shared_ptr<Maid> maid)
 {
-	mMap->getVertex(maid->getPos()).deleteMaid(maid);
+	InfoManager::getMap()->getVertex(maid->getPos()).deleteMaid(maid);
 	mMaidSet->erase(maid);
 }
 void MaidManager::turnOnAlert()
@@ -46,7 +40,7 @@ void MaidManager::update()
 {
 	//以下为测试代码
 	//保持场上有3个女仆
-	if(mMaidSet->size()<1)
+	if(mMaidSet->size()<3)
 		this->addNewMaid(1);
 	//对于所有女仆
 	for (auto& maid : *mMaidSet)
@@ -55,7 +49,7 @@ void MaidManager::update()
 		if (maid->free())
 		{
 			//派去巡逻
-			maid->receiveInstruction(Instruction(InstructionType::MOVETO, { rand() % mMap->getSize() }));
+			maid->receiveInstruction(Instruction(InstructionType::MOVETO, { rand() % InfoManager::getMap()->getSize() }));
 		}
 		else maid->receiveInstruction(Instruction(InstructionType::NUL, std::vector<int>()));
 	}
@@ -100,7 +94,7 @@ void MaidManager::update()
 		if (maid->dead())
 		{
 			deadMaid.push_back(maid);
-			mMap->addBlood(maid->getPos(), 1);
+			InfoManager::getMap()->addBlood(maid->getPos(), 1);
 		}
 	}
 	//删除死亡的女仆
@@ -112,8 +106,4 @@ void MaidManager::update()
 			mAlertTimeLeft--;
 		else turnOffAlert(MaidManagerStateType::NORMAL);
 	}
-}
-void MaidManager::bindMap(std::shared_ptr<Map>map)
-{
-	mMap = map;
 }

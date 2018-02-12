@@ -57,6 +57,8 @@ public:
 	static Vec2i getPos(int pos); 
 	//通用，判断一个坐标是否在格子正中间,误差不超过eps(eps为误差范围除以格子大小)
 	static bool inMid(Vec2d coord, int pos, double eps);
+	//MaidManager 获取指向地图的指针
+	static std::shared_ptr<Map> getMap();
 	//Flan 返回所有能看到的女仆
 	//std::vector<std::shared_ptr<Maid>> maidsInSight();
 };

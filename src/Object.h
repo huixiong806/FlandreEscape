@@ -10,6 +10,7 @@ protected:
 	//สตสýื๘ฑ๊
 	Vec2d mCoord;
 	int mHp;
+	double mSpeed;
 	virtual const int getHpLimit() = 0;
 	virtual const int getDamage() = 0;
 	virtual const int getHpRecoverPerTick() = 0;
@@ -18,7 +19,7 @@ public:
 	virtual int getPos();
 	virtual void setCoord(Vec2d coord);
 	virtual Vec2d getCoord();
-	virtual void move(Vec2d delta);
+	virtual void walk(Vec2d direction);
 	virtual void attack(Object& opponent);
 	virtual void attack(Object* opponent);
 	virtual void addHp(int hp);

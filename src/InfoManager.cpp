@@ -98,6 +98,11 @@ bool InfoManager::inMid(Vec2d coord, int pos,double eps)
 	bool yok= mid.y - eps *girdSize <= coord.y&&coord.y <= mid.y + eps *girdSize;
 	return xok&&yok;
 }
+//MaidManager 获取指向地图的指针
+std::shared_ptr<Map> InfoManager::getMap()
+{
+	return mMap;
+}
 /*
 std::vector<std::shared_ptr<Maid>> InfoManager::maidsInSight()
 {

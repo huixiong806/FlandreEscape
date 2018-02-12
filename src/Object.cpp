@@ -47,7 +47,7 @@ Vec2d Object::getCoord()
 {
 	return mCoord;
 }
-void Object::move(Vec2d delta)
+void Object::walk(Vec2d direction)
 {
-	mCoord += delta;
+	mCoord += direction *mSpeed;
 }
