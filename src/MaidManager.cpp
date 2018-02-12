@@ -55,7 +55,7 @@ void MaidManager::update()
 		if (maid->free())
 		{
 			//ÅÉÈ¥Ñ²Âß
-			maid->receiveInstruction(Instruction(InstructionType::PATROL, { 0,0,2,4 }));
+			maid->receiveInstruction(Instruction(InstructionType::PATROL, { 0,0,24 }));
 		}
 		else
 		{

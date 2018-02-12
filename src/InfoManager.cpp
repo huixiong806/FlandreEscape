@@ -31,6 +31,12 @@ int InfoManager::getBloodStain(std::shared_ptr<Maid> maid)
 {
 	return mMap->getVertex(maid->getPos()).getBlood();
 }
+//Maid 清理血迹(一次清理1)
+void InfoManager::cleanBloodStain(std::shared_ptr<Maid> maid)
+{
+	if (mMap->getVertex(maid->getPos()).getBlood() > 0)
+		mMap->getVertex(maid->getPos()).addBlood(-1);
+}
 void InfoManager::moveTo(std::shared_ptr<Maid> maid,int pos)
 {
 	mMap->getVertex(maid->getPos()).deleteMaid(maid);
