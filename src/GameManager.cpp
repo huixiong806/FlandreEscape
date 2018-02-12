@@ -1,5 +1,6 @@
 #include"GameManager.h"
 #include<iostream>
+#include<sstream>
 GameManager::GameManager()
 {
 
@@ -7,12 +8,7 @@ GameManager::GameManager()
 void GameManager::loadGame(std::string fileName)
 {
 	mInfoManager = std::make_shared<InfoManager>();
-	mMap = std::make_shared<Map>(5);
-	mMap->addUndirectEdge(0, 1);
-	mMap->addUndirectEdge(1, 2);
-	mMap->addUndirectEdge(2, 3);
-	mMap->addUndirectEdge(3, 4);
-	mMap->addUndirectEdge(4, 0);
+	mMap = std::make_shared<Map>(5,5);
 	mFlan = std::make_shared<FlandreScarlet>();
 	mMaidManager = std::make_shared<MaidManager>(this->mMap);
 	mInfoManager->bind(mMaidManager->getMaidSetPtr());
@@ -60,17 +56,20 @@ void GameManager::update()
 		*/
 		// Test new log class
 		logger.add("nameless maid");
-		char position[100], hp[100], state[100], instruction[100];
-		sprintf_s(position, "Pos:%d", maid->getPos());
-		sprintf_s(hp, "Hp:%d", maid->getHp());
-		sprintf_s(state, "State:%s", maidStateOutput[(int)maid->getState()].c_str());
-		sprintf_s(instruction, "Instruction:%s", instructionOutput[(int)maid->getInstructionType()].c_str());
-		logger.add(position);
-		logger.add(hp);
-		logger.add(state);
-		logger.add(instruction);
-
-
+		//char position[100], hp[100], state[100], instruction[100];v
+		std::stringstream pos,hp,state,insruction,wayp;
+		pos << "Pos:"<< maid->getPos();
+		hp << "Hp:" << maid->getHp();
+		state << "State:" << maidStateOutput[(int)maid->getState()];
+		insruction << "Instruction:" << instructionOutput[(int)maid->getInstructionType()] ;
+		wayp << "WayPoint:";
+		auto wayPoint = maid->getWayPoint();
+		for (auto i : wayPoint)wayp << i.pos << ",";
+		logger.add(pos.str());
+		logger.add(hp.str());
+		logger.add(state.str());
+		logger.add(insruction.str());
+		logger.add(wayp.str());
 		if (maid->dead())
 		{
 			deadMaid.push_back(maid);

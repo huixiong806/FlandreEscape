@@ -21,9 +21,9 @@ void RenderText(SDL_Renderer * r, std::vector<std::string> message, TTF_Font * f
 		SDL_DestroyTexture(text);
 	}
 }
-string getAbsolutePath(char* argv)
+std::string getAbsolutePath(char* argv)
 {
-	string str(argv);
+	std::string str(argv);
 	str = str.substr(0, str.find_last_of("FlandreEscape.exe") - sizeof("FlandreEscape.exe") + 1);
 	return str;
 }

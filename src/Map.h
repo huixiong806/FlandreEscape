@@ -7,11 +7,13 @@ class Maid;
 class Vertex
 {
 private:
+	bool enabled;
 	int mBlood;
 	std::unordered_set<std::shared_ptr<Maid>> mMaid;
 public:
 	Vertex()
 	{
+		enabled = true;
 		mBlood = 0;
 	}
 	int getBlood();
@@ -22,15 +24,17 @@ public:
 class Map
 {
 private:
-	std::vector<std::vector<int>>mEdge;
+	//std::vector<std::vector<int>>mEdge;
 	std::vector<Vertex>mVertex;
-	int mSize;
+	int mSizeR,mSizeC;
 public:
-	Map(int size);
-	void addEdge(int from, int to);
-	void addUndirectEdge(int u, int v);
+	Map(int sizeR,int sizeC);
+	//void addEdge(int from, int to);
+	//void addUndirectEdge(int u, int v);
 	Vertex& getVertex(int id);
-	int getSize() { return mSize; }
+	int getSizeR() { return mSizeR; }
+	int getSizeC() { return mSizeC; }
+	int getSize() { return mSizeR * mSizeC; }
 	void addBlood(int pos,int val);
 	std::vector<int>getNearByVertexId(int id);
 	std::vector<int>getWayPoints(int startPos,int targetPos);

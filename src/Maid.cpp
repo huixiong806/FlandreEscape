@@ -131,9 +131,11 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 	case MaidState::PATROL:
 	{
 		//看到血迹，拉响警报
-		bool turnOnAlert = false;
 		if (info->getBloodStain(getSelf()))
-			turnOnAlert = true;
+		{
+			info->cleanBloodStain(getSelf());
+			return MaidInfoType::ALERT;
+		}
 		//看到芙兰，并且有警报的话，状态转换为攻击
 		if (info->CanSeeFlan(getSelf()) && info->haveAlert())
 		{
@@ -146,7 +148,7 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 			if (mWayPoint.empty())
 			{
 				mState = MaidState::STOP;
-				return turnOnAlert ? MaidInfoType::ALERT : MaidInfoType::FREE;
+				return MaidInfoType::FREE;
 			}
 			else
 			{
@@ -155,7 +157,7 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 				if (target.type == WayPointType::LOOP)
 					mWayPoint.push_back(target);
 				info->moveTo(getSelf(), target.pos);
-				return turnOnAlert ? MaidInfoType::ALERT : MaidInfoType::NUL;
+				return MaidInfoType::NUL;
 			}
 		}
 	}

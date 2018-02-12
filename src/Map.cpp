@@ -24,25 +24,43 @@ void Vertex::addBlood(int val)
 std::vector<int> Map::getNearByVertexId(int id)
 {
 	std::vector<int> res;
-	for (int i = 0; i < mEdge[id].size();++i)
-		res.push_back(mEdge[id][i]);
+	const int dr[4] = { -1,1, 0,0 };
+	const int dc[4] = { 0,0,-1,1 };
+	int nowR = id / mSizeC;
+	int nowC = id % mSizeC;
+	for (int i = 0; i < 4; ++i)
+	{
+		int nextR = nowR + dr[i];
+		int nextC = nowC + dc[i];
+		if (nextR < 0 || nextR >= mSizeR)continue;
+		if (nextC < 0 || nextC >= mSizeC)continue;
+		res.push_back(nextR*mSizeC+nextC);
+	}
 	return res;
 }
 std::vector<int> Map::getWayPoints(int startPos, int targetPos)
 {
 	std::queue<int>q;
-	std::vector<int>dist(mSize, -1);
-	std::vector<int>pre(mSize, 0);
+	std::vector<int>dist(mSizeR*mSizeC, -1);
+	std::vector<int>pre(mSizeR*mSizeC, 0);
 	dist[startPos] = 0;
 	q.push(startPos);
-	//BFSѰ·
+	//BFS
 	while (!q.empty())
 	{
 		int now = q.front();
+		int nowR = now / mSizeC;
+		int nowC = now % mSizeC;
 		q.pop();
-		for (int i = 0; i < mEdge[now].size();++i)
+		const int dr[4] = {-1,1, 0,0};
+		const int dc[4] = { 0,0,-1,1 };
+		for (int i = 0; i<4;++i)
 		{
-			int next = mEdge[now][i];
+			int nextR = nowR + dr[i];
+			int nextC = nowC + dc[i];
+			if (nextR < 0 || nextR >= mSizeR)continue;
+			if (nextC < 0 || nextC >= mSizeC)continue;
+			int next = nextR * mSizeC + nextC;
 			if (dist[next] == -1)
 			{
 				dist[next] = dist[now] + 1;
@@ -66,16 +84,19 @@ std::vector<int> Map::getWayPoints(int startPos, int targetPos)
 	}
 	return res;
 }
-Map::Map(int size)
+Map::Map(int sizeR,int sizeC)
 {
-	mVertex.resize(size);
-	mEdge.resize(size);
-	mSize = size;
+	mVertex.resize(sizeR*sizeC);
+	mSizeR = sizeR;
+	mSizeC = sizeC;
+	//mEdge.resize(size);
+	//mSize = size;
 }
 void Map::addBlood(int pos, int val)
 {
 	this->mVertex[pos].addBlood(val);
 }
+/*
 void Map::addEdge(int from, int to)
 {
 	mEdge[from].push_back(to);
@@ -84,4 +105,4 @@ void Map::addUndirectEdge(int u, int v)
 {
 	mEdge[u].push_back(v);
 	mEdge[v].push_back(u);
-}
+}*/

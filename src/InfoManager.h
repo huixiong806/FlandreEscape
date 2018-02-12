@@ -31,6 +31,8 @@ public:
 	std::shared_ptr<FlandreScarlet> getFlan();
 	//Maid 获取血迹
 	int getBloodStain(std::shared_ptr<Maid> maid);
+	//Maid 清理血迹(一次清理1)
+	void cleanBloodStain(std::shared_ptr<Maid> maid);
 	//Maid 移动到
 	void moveTo(std::shared_ptr<Maid> maid,int pos);
 	//Maid 获取路径(不包括起点，包括终点)
