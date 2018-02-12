@@ -84,3 +84,13 @@ Log& GameManager::getLog()
 {
 	return logger;
 }
+
+Map & GameManager::getMap()
+{
+	return * mMap;
+}
+
+std::unordered_set<std::shared_ptr<Maid>> GameManager::getMaids()
+{
+	return mMaidManager->getMaids();
+}
