@@ -18,20 +18,25 @@ void GameManager::loadGame(std::string fileName)
 }
 void GameManager::update()
 {
-	//maid managerÖ´ĞĞ»ØºÏ²Ù×÷
-	mMaidManager->update();
+	//maid manageræ‰§è¡Œå›åˆæ“ä½œ
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maidSet = mMaidManager->getMaidSetPtr();
+	mMaidManager->update();
 	std::vector<std::shared_ptr<Maid>>deadMaid;
-	//Ã¿¸öÅ®ÆÍÖ´ĞĞ»ØºÏ²Ù×÷
+	std::cout << "MaidCount:" << maidSet->size() << std::endl;
+	//æ¯ä¸ªå¥³ä»†æ‰§è¡Œå›åˆæ“ä½œ
 	for (auto& maid : *maidSet)
 	{
-		//std::cout << maid.use_count() <<std:: endl; Êä³ö3
+		//std::cout << maid.use_count() <<std:: endl; è¾“å‡º3
 		maid->update(mInfoManager);
 		/**
 		std::cout << "nameless maid"<<std::endl;
 		std::cout << "Pos:" << maid->getPos() << std::endl;
 		std::cout << "Hp:" << maid->getHp() << std::endl;
 		std::cout << "State:" << maidStateOutput[(int)maid->getState()] << std::endl;
+		std::cout << "WayPoint:";
+		auto wayPoint = maid->getWayPoint();
+		for (auto i : wayPoint)std::cout <<i.pos << ",";
+		std::cout << std::endl;
 		std::cout << "Instruction:" << instructionOutput[(int)maid->getInstructionType()] << std::endl;
 		std::cout<<std::endl;
 		**/
@@ -68,15 +73,11 @@ void GameManager::update()
 			mMap->addBlood(maid->getPos(),1);
 		}
 	}
-	//É¾³ıËÀÍöµÄÅ®ÆÍ
+	//åˆ é™¤æ­»äº¡çš„å¥³ä»†
 	for (auto& maid : deadMaid)
-		maidSet->erase(maid);
+		mMaidManager->deleteMaid(maid);
 }
-
 Log& GameManager::getLog()
 {
 	return logger;
 }
-
-GameManager::GameManager()
-{}

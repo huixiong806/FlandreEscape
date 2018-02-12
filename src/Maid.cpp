@@ -43,9 +43,9 @@ std::shared_ptr<Maid> Maid::getSelf()
 MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 {
 	//回复HP
-	if(this->getHp()<this->getHpLimit())
+	if(this->getHp()+this->getHpRecoverPerTick ()<=this->getHpLimit())
 		this->addHp(this->getHpRecoverPerTick());
-	if (this->dead())return MaidInfoType::MEET;
+	if (this->dead())return MaidInfoType::NUL;
 	//处理maid manager发来的指令
 	switch (mCurInstruction.type)
 	{
@@ -129,9 +129,11 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 		break;
 	case MaidState::MOVE:
 	case MaidState::PATROL:
+	{
 		//看到血迹，拉响警报
+		bool turnOnAlert = false;
 		if (info->getBloodStain(getSelf()))
-			return MaidInfoType::ALERT;
+			turnOnAlert = true;
 		//看到芙兰，并且有警报的话，状态转换为攻击
 		if (info->CanSeeFlan(getSelf()) && info->haveAlert())
 		{
@@ -144,7 +146,7 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 			if (mWayPoint.empty())
 			{
 				mState = MaidState::STOP;
-				return MaidInfoType::FREE;
+				return turnOnAlert ? MaidInfoType::ALERT : MaidInfoType::FREE;
 			}
 			else
 			{
@@ -153,9 +155,10 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 				if (target.type == WayPointType::LOOP)
 					mWayPoint.push_back(target);
 				info->moveTo(getSelf(), target.pos);
-				return MaidInfoType::NUL;
+				return turnOnAlert ? MaidInfoType::ALERT : MaidInfoType::NUL;
 			}
 		}
+	}
 		break;
 	case MaidState::FIGHT:
 		//看到芙兰，则攻击，否则恢复原先状态
