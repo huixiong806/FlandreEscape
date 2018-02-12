@@ -1,15 +1,15 @@
 #include"GameManager.h"
 #include<iostream>
 #include<conio.h>
-#include<SDL.h>
-#include<SDL_ttf.h>
+#include<SDL2\SDL.h>
+#include<SDL2\SDL_ttf.h>
 #include<vector>
 #include"Log.hpp"
 #include"Toolset.hpp"
 using namespace std;
 const int interval = 1;
 shared_ptr<GameManager>game;
-int main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) + TTF_Init())
 	{

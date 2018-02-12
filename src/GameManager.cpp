@@ -1,5 +1,9 @@
 #include"GameManager.h"
 #include<iostream>
+GameManager::GameManager()
+{
+
+}
 void GameManager::loadGame(std::string fileName)
 {
 	mInfoManager = std::make_shared<InfoManager>();
