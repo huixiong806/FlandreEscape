@@ -21,6 +21,7 @@ public:
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> getMaidSetPtr();
 	std::shared_ptr<bool> getAlertPtr();
 	void addNewMaid(int pos);
+	void deleteMaid(std::shared_ptr<Maid> maid);
 	void turnOnAlert();
 	void turnOffAlert(MaidManagerStateType newState);
 	void update();
