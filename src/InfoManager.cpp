@@ -15,6 +15,10 @@ void InfoManager::bind(std::shared_ptr<Map> map)
 {
 	mMap= map;
 }
+void InfoManager::bind(std::shared_ptr<Log> logger)
+{
+	mLogger = logger;
+}
 bool InfoManager::haveAlert()
 {
 	return *mAlertIsOn;
@@ -52,6 +56,11 @@ std::vector<int> InfoManager::getPath(std::shared_ptr<Maid> maid, int targetPos)
 std::vector<int> InfoManager::getPath(int startPos, int targetPos)
 {
 	return mMap->getWayPoints(startPos, targetPos);
+}
+//通用 获取logger
+std::shared_ptr<Log> InfoManager::getLogger()
+{
+	return mLogger;
 }
 /*
 std::vector<std::shared_ptr<Maid>> InfoManager::maidsInSight()

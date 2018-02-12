@@ -10,6 +10,8 @@ enum class MaidManagerStateType
 class MaidManager
 {
 private:
+	static const int mMaxAlertTime=100;
+	int mAlertTimeLeft;
 	MaidManagerStateType mState;
 	std::shared_ptr<bool> mAlertIsOn;
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>>mMaidSet;
@@ -24,6 +26,5 @@ public:
 	void deleteMaid(std::shared_ptr<Maid> maid);
 	void turnOnAlert();
 	void turnOffAlert(MaidManagerStateType newState);
-	void update();
-	std::unordered_set<std::shared_ptr<Maid>> getMaids();
+	void update(std::shared_ptr<InfoManager>info);
 };

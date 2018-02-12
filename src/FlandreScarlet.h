@@ -5,7 +5,7 @@
 #include"Object.h"
 #include"Instruction.h"
 //Ü½À¼¶äÂ¶
-class Infomanager;
+class InfoManager;
 class FlandreScarlet :public Object,public std::enable_shared_from_this<FlandreScarlet>
 {
 private:
@@ -16,4 +16,5 @@ private:
 	const int getDamage();
 	const int getHpRecoverPerTick();
 public:
+	void update(std::shared_ptr<InfoManager> info);
 };

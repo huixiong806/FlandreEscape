@@ -20,4 +20,5 @@ public:
 	virtual bool dead();
 	virtual int getHp();
 	virtual void setName(const std::string& str);
+	virtual std::string getName();
 };

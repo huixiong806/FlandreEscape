@@ -31,9 +31,9 @@ class InfoManager;
 class Maid :public std::enable_shared_from_this<Maid>,public Object
 {
 private:
-	static const int mHpLimit = 100;         //血量上限
-	static const int mDamage = 3;           //每次攻击造成的伤害
-	static const int mHpRecoverPerTick = -1; //每tick血量回复
+	static const int mHpLimit = 10;         //血量上限
+	static const int mDamage = 5;           //每次攻击造成的伤害
+	static const int mHpRecoverPerTick = 0; //每tick血量回复
 	Instruction mCurInstruction;  //当前指令
 	MaidState mState,mPreState;   //当前状态,先前状态(战斗时临时纪录)
 	std::deque<WayPoint> mWayPoint;    //路径点
