@@ -139,6 +139,7 @@
     <ClCompile Include="..\src\Object.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Constants.h" />
     <ClInclude Include="..\src\FlandreScarlet.h" />
     <ClInclude Include="..\src\GameManager.h" />
     <ClInclude Include="..\src\Log.hpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="..\src\Object.h" />
     <ClInclude Include="..\src\InfoManager.h" />
     <ClInclude Include="..\src\Toolset.hpp" />
+    <ClInclude Include="..\src\Vec2.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\x64\Debug\box.bmp" />

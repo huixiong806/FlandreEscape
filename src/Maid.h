@@ -34,6 +34,7 @@ private:
 	static const int mHpLimit = 10;         //血量上限
 	static const int mDamage = 5;           //每次攻击造成的伤害
 	static const int mHpRecoverPerTick = 0; //每tick血量回复
+	static const double mSpeed;   //每tick移动的距离
 	Instruction mCurInstruction;  //当前指令
 	MaidState mState,mPreState;   //当前状态,先前状态(战斗时临时纪录)
 	std::deque<WayPoint> mWayPoint;    //路径点
@@ -46,9 +47,11 @@ public:
 	~Maid();
 	bool free() { return mState == MaidState::STOP; }
 	MaidState getState() { return mState; }
+	//返回指向自身的shared_ptr
 	std::shared_ptr<Maid> getSelf();
+	//接收指令
 	void receiveInstruction(const Instruction& instruction);
-	MaidInfoType update(std::shared_ptr<InfoManager> info);  //每tick的操作
+	MaidInfoType update();  //每tick的操作
 	InstructionType getInstructionType() { return this->mCurInstruction.type; }
 	std::deque<WayPoint>& getWayPoint() { return mWayPoint; }
 };

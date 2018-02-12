@@ -71,6 +71,12 @@
     <ClInclude Include="..\src\Toolset.hpp">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Vec2.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Constants.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\x64\Debug\box.bmp">

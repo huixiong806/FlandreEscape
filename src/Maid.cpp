@@ -4,6 +4,7 @@ const std::string maidName[12] = { "Sakuya","Daiyousei","Lily","Marisa","Reimu",
 Maid::Maid(int pos)
 {
 	this->setPos(pos);
+	this->setCoord(InfoManager::getCoordByPos(pos));
 	this->setHp(this->getHpLimit());
 	std::stringstream ss;
 	this->setName(maidName[rand()%12]);
@@ -13,8 +14,10 @@ Maid::Maid(int pos)
 Maid::Maid()
 {
 	this->setPos(0);
+	this->setCoord(InfoManager::getCoordByPos(0));
 	this->setHp(this->getHpLimit());
-	this->setName("nameless maid");
+	std::stringstream ss;
+	this->setName(maidName[rand() % 12]);
 	this->mState = MaidState::STOP;
 	this->mCurInstruction = Instruction(InstructionType::NUL, std::vector<int>());
 }
@@ -43,7 +46,7 @@ std::shared_ptr<Maid> Maid::getSelf()
 	return shared_from_this();
 }
 //每tick的操作
-MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
+MaidInfoType Maid::update()
 {
 	//回复HP
 	if(this->getHp()+this->getHpRecoverPerTick ()<=this->getHpLimit())
@@ -60,14 +63,14 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 		mState = MaidState::MOVE;
 		int firstPoint = mCurInstruction.parameters[0];
 		//从自己所在位置到第一个路径点
-		std::vector<int> wayPoint = info->getPath(getSelf(), firstPoint);
+		std::vector<int> wayPoint = InfoManager::getPath(getSelf(), firstPoint);
 		//从第一个路径点到终点
 		for (int i = 0;i < mCurInstruction.parameters.size() - 1; ++i)
 		{
 			//加入连续两点之间的路径
 			int curPoint = mCurInstruction.parameters[i];
 			int nextPoint = mCurInstruction.parameters[i + 1];
-			std::vector<int> newWayPoint = info->getPath(curPoint, nextPoint);
+			std::vector<int> newWayPoint = InfoManager::getPath(curPoint, nextPoint);
 			wayPoint.insert(wayPoint.end(), newWayPoint.begin(), newWayPoint.end());
 		}
 		mWayPoint.clear();
@@ -81,7 +84,7 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 		mState = MaidState::PATROL;
 		bool loop = mCurInstruction.parameters[0];
 		int startPoint = mCurInstruction.parameters[1];
-		std::vector<int> wayPoint = info->getPath(getSelf(), startPoint);
+		std::vector<int> wayPoint = InfoManager::getPath(getSelf(), startPoint);
 		mWayPoint.clear();
 		for (auto item : wayPoint)
 			mWayPoint.push_back(WayPoint(WayPointType::ONETIME, item));
@@ -91,7 +94,7 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 			//加入连续两点之间的路径
 			int curPoint = mCurInstruction.parameters[i];
 			int nextPoint = mCurInstruction.parameters[i+1];
-			std::vector<int> newWayPoint= info->getPath(curPoint, nextPoint);
+			std::vector<int> newWayPoint= InfoManager::getPath(curPoint, nextPoint);
 			wayPoint.insert(wayPoint.end(), newWayPoint.begin(), newWayPoint.end());
 		}
 		if (loop)
@@ -99,7 +102,7 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 			//加入最后一个点到起点的路径
 			int curPoint = *(mCurInstruction.parameters.end()-1);
 			int nextPoint = mCurInstruction.parameters[1];
-			std::vector<int> newWayPoint = info->getPath(curPoint, nextPoint);
+			std::vector<int> newWayPoint = InfoManager::getPath(curPoint, nextPoint);
 			//最后一个点不会重复加进去，因为之前加进去的类型是ONETIME,单次使用即被抛弃。
 			wayPoint.insert(wayPoint.end(), newWayPoint.begin(), newWayPoint.end());
 			for (auto item : wayPoint)
@@ -134,13 +137,13 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 	case MaidState::PATROL:
 	{
 		//看到血迹，拉响警报
-		if (info->getBloodStain(getSelf()))
+		if (InfoManager::getBloodStain(getSelf()))
 		{
-			info->cleanBloodStain(getSelf());
+			InfoManager::cleanBloodStain(getSelf());
 			return MaidInfoType::ALERT;
 		}
 		//看到芙兰，并且有警报的话，状态转换为攻击
-		if (info->CanSeeFlan(getSelf()) && info->haveAlert())
+		if (InfoManager::CanSeeFlan(getSelf()) && InfoManager::haveAlert())
 		{
 			mPreState = mState;
 			mState = MaidState::FIGHT;
@@ -156,10 +159,15 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 			else
 			{
 				WayPoint target = mWayPoint.front();
-				mWayPoint.pop_front();
-				if (target.type == WayPointType::LOOP)
-					mWayPoint.push_back(target);
-				info->moveTo(getSelf(), target.pos);
+				Vec2d newCoord = mCoord + InfoManager::getTheDirectionTo(mCoord, target.pos)*mSpeed;
+				this->setCoord(newCoord);
+				if (InfoManager::getPosByCoord(mCoord) == target.pos&&InfoManager::inMid(mCoord, target.pos,0.3))
+				{
+					mWayPoint.pop_front();
+					if (target.type == WayPointType::LOOP)
+						mWayPoint.push_back(target);
+					InfoManager::moveTo(getSelf(), target.pos);
+				}
 				return MaidInfoType::NUL;
 			}
 		}
@@ -167,9 +175,9 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 		break;
 	case MaidState::FIGHT:
 		//看到芙兰，则攻击，否则恢复原先状态
-		if (info->CanSeeFlan(getSelf()))
+		if (InfoManager::CanSeeFlan(getSelf()))
 		{
-			this->attack(info->getFlan().get());
+			this->attack(InfoManager::getFlan().get());
 			return MaidInfoType::MEET;
 		}
 		else
@@ -183,3 +191,4 @@ MaidInfoType Maid::update(std::shared_ptr<InfoManager> info)
 	}
 	return MaidInfoType::NUL;
 }
+const double Maid::mSpeed = 2.0;  //每tick移动的距离

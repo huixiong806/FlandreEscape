@@ -59,7 +59,7 @@ int main(int argc, char** argv)
 		SDL_RenderClear(renderer);
 		//game->update();
 		// draw map
-		int gSize = 50;
+		int gSize = girdSize;
 		auto map = game->getMapPtr();
 		int c = map->getSizeC(), r = map->getSizeR();
 		groundDesPos = { 0, 0, gSize, gSize };
@@ -70,8 +70,8 @@ int main(int argc, char** argv)
 		auto maids = game->getMaidSetPtr();
 		for (auto maid : *maids)
 		{
-			int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
-			SDL_Rect maidPos = {y,x, gSize, gSize };
+			//int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
+			SDL_Rect maidPos = { maid->getCoord().y- girdSize*0.5,maid->getCoord().x- girdSize*0.5, gSize, gSize };
 			RenderImage(renderer, ground, maidPos, maidClip);
 		}
 

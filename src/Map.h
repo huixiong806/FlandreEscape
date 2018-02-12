@@ -2,6 +2,7 @@
 #include<vector>
 #include<unordered_set>
 #include<memory>
+#include"Vec2.hpp"
 #include"Maid.h"
 class Maid;
 class Vertex
@@ -36,6 +37,8 @@ public:
 	int getSizeC() { return mSizeC; }
 	int getSize() { return mSizeR * mSizeC; }
 	void addBlood(int pos,int val);
+	Vec2i getPos(int pos) { return Vec2i(pos / mSizeC, pos%mSizeC); }
+	int getPos(int r,int c) { return r*mSizeC+c; }
 	std::vector<int>getNearByVertexId(int id);
 	std::vector<int>getWayPoints(int startPos,int targetPos);
 };

@@ -26,5 +26,5 @@ public:
 	void deleteMaid(std::shared_ptr<Maid> maid);
 	void turnOnAlert();
 	void turnOffAlert(MaidManagerStateType newState);
-	void update(std::shared_ptr<InfoManager>info);
+	void update();
 };

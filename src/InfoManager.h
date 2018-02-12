@@ -1,5 +1,6 @@
 #pragma once
 #include<memory>
+#include"Constants.h"
 #include"Log.hpp"
 #include"Maid.h"
 #include"Map.h"
@@ -12,40 +13,50 @@ class FlandreScarlet;
 class InfoManager
 {
 private:
-	std::shared_ptr<Map> mMap;
-	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> mMaid;
-	std::shared_ptr<FlandreScarlet> mFlan;
-	std::shared_ptr<bool> mAlertIsOn;
-	std::shared_ptr<Log> mLogger;
+	static std::shared_ptr<Map> mMap;
+	static std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> mMaid;
+	static std::shared_ptr<FlandreScarlet> mFlan;
+	static std::shared_ptr<bool> mAlertIsOn;
+	static std::shared_ptr<Log> mLogger;
 public:
 	//Game 绑定芙兰
-	void bind(std::shared_ptr<FlandreScarlet> flan);
+	static void bind(std::shared_ptr<FlandreScarlet> flan);
 	//Game 绑定女仆集合
-	void bind(std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maid);
+	static void bind(std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maid);
 	//Game 绑定警报
-	void bind(std::shared_ptr<bool> alert);
+	static void bind(std::shared_ptr<bool> alert);
 	//Game 绑定地图
-	void bind(std::shared_ptr<Map> map);
+	static void bind(std::shared_ptr<Map> map);
 	//Game 绑定Logger
-	void bind(std::shared_ptr<Log> logger);
+	static void bind(std::shared_ptr<Log> logger);
 	//Maid 是否有警报
-	bool haveAlert();
+	static bool haveAlert();
 	//Maid 是否能看到芙兰
-	bool CanSeeFlan(std::shared_ptr<Maid> maid);
+	static bool CanSeeFlan(std::shared_ptr<Maid> maid);
 	//Maid 返回芙兰
-	std::shared_ptr<FlandreScarlet> getFlan();
+	static std::shared_ptr<FlandreScarlet> getFlan();
 	//Maid 获取血迹
-	int getBloodStain(std::shared_ptr<Maid> maid);
+	static int getBloodStain(std::shared_ptr<Maid> maid);
 	//Maid 清理血迹(一次清理1)
-	void cleanBloodStain(std::shared_ptr<Maid> maid);
+	static void cleanBloodStain(std::shared_ptr<Maid> maid);
 	//Maid 移动到
-	void moveTo(std::shared_ptr<Maid> maid,int pos);
+	static void moveTo(std::shared_ptr<Maid> maid,int pos);
 	//Maid 获取路径(不包括起点，包括终点)
-	std::vector<int> getPath(std::shared_ptr<Maid> maid, int targetPos);
+	static std::vector<int> getPath(std::shared_ptr<Maid> maid, int targetPos);
 	//通用 获取路径(不包括起点，包括终点)
-	std::vector<int> getPath(int startPos, int targetPos);
+	static std::vector<int> getPath(int startPos, int targetPos);
 	//通用 获取logger
-	std::shared_ptr<Log> getLogger();
+	static std::shared_ptr<Log> getLogger();
+	//通用 想要移动到某个格子，应该往哪个方向走？返回一个单位向量
+	static Vec2d getTheDirectionTo(Vec2d startPos, int tarPos);
+	//通用 根据实数坐标确定位置
+	static int getPosByCoord(Vec2d coord);
+	//通用 返回该格子中间的坐标
+	static Vec2d getCoordByPos(int pos);
+	//通用 将位置转换为Vec2i
+	static Vec2i getPos(int pos); 
+	//通用，判断一个坐标是否在格子正中间,误差不超过eps(eps为误差范围除以格子大小)
+	static bool inMid(Vec2d coord, int pos, double eps);
 	//Flan 返回所有能看到的女仆
 	//std::vector<std::shared_ptr<Maid>> maidsInSight();
 };

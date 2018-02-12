@@ -16,5 +16,5 @@ private:
 	const int getDamage();
 	const int getHpRecoverPerTick();
 public:
-	void update(std::shared_ptr<InfoManager> info);
+	void update();
 };

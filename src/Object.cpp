@@ -39,3 +39,15 @@ std::string Object::getName()
 {
 	return mName;
 }
+void Object::setCoord(Vec2d coord)
+{
+	mCoord = coord;
+}
+Vec2d Object::getCoord()
+{
+	return mCoord;
+}
+void Object::move(Vec2d delta)
+{
+	mCoord += delta;
+}

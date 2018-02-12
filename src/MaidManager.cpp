@@ -42,11 +42,11 @@ std::shared_ptr<bool> MaidManager::getAlertPtr()
 {
 	return mAlertIsOn;
 }
-void MaidManager::update(std::shared_ptr<InfoManager>info)
+void MaidManager::update()
 {
 	//以下为测试代码
 	//保持场上有3个女仆
-	if(mMaidSet->size()<3)
+	if(mMaidSet->size()<1)
 		this->addNewMaid(1);
 	//对于所有女仆
 	for (auto& maid : *mMaidSet)
@@ -64,9 +64,9 @@ void MaidManager::update(std::shared_ptr<InfoManager>info)
 	for (auto& maid : *mMaidSet)
 	{
 		//std::cout << maid.use_count() <<std:: endl; 输出3
-		MaidInfoType maidInfo=maid->update(info);
-		if(maidInfo== MaidInfoType::ALERT)
-			
+		MaidInfoType maidInfo=maid->update();
+		if (maidInfo == MaidInfoType::ALERT)
+			this->turnOnAlert();
 		/**
 		std::cout << "nameless maid"<<std::endl;
 		std::cout << "Pos:" << maid->getPos() << std::endl;
@@ -81,8 +81,7 @@ void MaidManager::update(std::shared_ptr<InfoManager>info)
 		**/
 		//update info
 		// Test new log class
-		/*
-		std::shared_ptr<Log> logger= info->getLogger();
+		std::shared_ptr<Log> logger= InfoManager::getLogger();
 		logger->add(maid->getName());
 		//char position[100], hp[100], state[100], instruction[100];v
 		std::stringstream pos, hp, state, insruction, wayp;
@@ -98,7 +97,6 @@ void MaidManager::update(std::shared_ptr<InfoManager>info)
 		logger->add(state.str());
 		logger->add(insruction.str());
 		logger->add(wayp.str());
-		*/
 		if (maid->dead())
 		{
 			deadMaid.push_back(maid);
