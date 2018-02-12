@@ -3,6 +3,7 @@
 #include<conio.h>
 #include<SDL2\SDL.h>
 #include<SDL2\SDL_ttf.h>
+#include<SDL2\SDL_image.h>
 #include<vector>
 #include"Log.hpp"
 #include"Toolset.hpp"
@@ -25,9 +26,12 @@ int main(int argc, char** argv)
 
 	// cout << (AP + "\\consola.ttf").c_str();
 	
+	// perpare resources
 	TTF_Font * font = TTF_OpenFont((AP + "\\consola.ttf").c_str(), 12);
-	SDL_Color textColor = { 255 , 255 , 255 };
-	SDL_Rect pos = { 10, 100, 200, 20 };
+	SDL_Color textColor = { 255 , 0 , 0 };
+	SDL_Rect groundClip = { 0, 0, 100, 100 }, groundDesPos, maidClip = { 179, 302, 50, 50 };
+	SDL_Texture * ground = IMG_LoadTexture(renderer, (AP + "\\box.bmp").c_str());
+
 
 	/// Main event loop
 	bool quit = false;
@@ -48,10 +52,29 @@ int main(int argc, char** argv)
 				}
 			}
 		}
-		auto message = game->getLog().getLast(15);
-		pos.y = 100;
 		SDL_RenderClear(renderer);
-		RenderText(renderer, message, font, textColor);
+		
+		// draw map
+		int gSize = 50;
+		auto map = game->getMap();
+		int c = map.getSizeC(), r = map.getSizeR();
+		groundDesPos = { 0, 0, gSize, gSize };
+		for (; groundDesPos.y < c * gSize; groundDesPos.y += gSize)
+			for (groundDesPos.x = 0; groundDesPos.x < r * gSize; groundDesPos.x += gSize)
+				RenderImage(renderer, ground, groundDesPos, groundClip);
+		// draw maids
+		auto maids = game->getMaids();
+		for (auto maid : maids)
+		{
+			int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
+			SDL_Rect maidPos = { x, y, gSize, gSize };
+			RenderImage(renderer, ground, maidPos, maidClip);
+		}
+
+		// log 
+		auto message = game->getLog().getLast(15);
+		RenderText(renderer, message, font, textColor, 10, 200);
+
 		SDL_RenderPresent(renderer);
 	}
 	SDL_DestroyRenderer(renderer);

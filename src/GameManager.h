@@ -23,4 +23,6 @@ public:
 	void loadGame(std::string fileName);
 	void update();
 	Log& getLog();
+	Map& getMap();
+	std::unordered_set<std::shared_ptr<Maid>> getMaids();
 };

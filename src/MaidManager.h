@@ -25,4 +25,5 @@ public:
 	void turnOnAlert();
 	void turnOffAlert(MaidManagerStateType newState);
 	void update();
+	std::unordered_set<std::shared_ptr<Maid>> getMaids();
 };

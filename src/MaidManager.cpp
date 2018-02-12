@@ -63,6 +63,10 @@ void MaidManager::update()
 		}
 	}
 }
+std::unordered_set<std::shared_ptr<Maid>> MaidManager::getMaids()
+{
+	return *mMaidSet;
+}
 void MaidManager::bindMap(std::shared_ptr<Map>map)
 {
 	mMap = map;

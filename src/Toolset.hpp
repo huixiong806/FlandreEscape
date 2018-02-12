@@ -21,6 +21,10 @@ void RenderText(SDL_Renderer * r, std::vector<std::string> message, TTF_Font * f
 		SDL_DestroyTexture(text);
 	}
 }
+void RenderImage(SDL_Renderer * r, SDL_Texture * tex, SDL_Rect pos, SDL_Rect clip)
+{   // 未来可能改用SDL_RendererCopyEX，先封装一个再说
+	SDL_RenderCopy(r, tex, &clip, &pos);
+}
 std::string getAbsolutePath(char* argv)
 {
 	std::string str(argv);
