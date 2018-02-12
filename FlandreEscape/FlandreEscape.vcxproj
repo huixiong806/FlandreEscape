@@ -150,6 +150,9 @@
     <ClInclude Include="..\src\InfoManager.h" />
     <ClInclude Include="..\src\Toolset.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\x64\Debug\box.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
