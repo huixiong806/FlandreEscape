@@ -18,16 +18,17 @@ void GameManager::loadGame(std::string fileName)
 }
 void GameManager::update()
 {
-	//maid managerÖ´ĞĞ»ØºÏ²Ù×÷
+	//maid manageræ‰§è¡Œå›åˆæ“ä½œ
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maidSet = mMaidManager->getMaidSetPtr();
 	mMaidManager->update();
 	std::vector<std::shared_ptr<Maid>>deadMaid;
 	std::cout << "MaidCount:" << maidSet->size() << std::endl;
-	//Ã¿¸öÅ®ÆÍÖ´ĞĞ»ØºÏ²Ù×÷
+	//æ¯ä¸ªå¥³ä»†æ‰§è¡Œå›åˆæ“ä½œ
 	for (auto& maid : *maidSet)
 	{
-		//std::cout << maid.use_count() <<std:: endl; Êä³ö3
+		//std::cout << maid.use_count() <<std:: endl; è¾“å‡º3
 		maid->update(mInfoManager);
+		/**
 		std::cout << "nameless maid"<<std::endl;
 		std::cout << "Pos:" << maid->getPos() << std::endl;
 		std::cout << "Hp:" << maid->getHp() << std::endl;
@@ -38,13 +39,45 @@ void GameManager::update()
 		std::cout << std::endl;
 		std::cout << "Instruction:" << instructionOutput[(int)maid->getInstructionType()] << std::endl;
 		std::cout<<std::endl;
+		**/
+		//update info
+		/*
+		info.clear();
+		info.push_back("nameless maid");
+		char position[100], hp[100], state[100], instruction[100];
+		sprintf_s(position, "Pos:%d", maid->getPos());
+		sprintf_s(hp, "Hp:%d", maid->getHp());
+		sprintf_s(state, "State:%s", maidStateOutput[(int)maid->getState()].c_str());
+		sprintf_s(instruction, "Instruction:%s", instructionOutput[(int)maid->getInstructionType()].c_str());
+		info.push_back(position);
+		info.push_back(hp);
+		info.push_back(state);
+		info.push_back(instruction);
+		*/
+		// Test new log class
+		logger.add("nameless maid");
+		char position[100], hp[100], state[100], instruction[100];
+		sprintf_s(position, "Pos:%d", maid->getPos());
+		sprintf_s(hp, "Hp:%d", maid->getHp());
+		sprintf_s(state, "State:%s", maidStateOutput[(int)maid->getState()].c_str());
+		sprintf_s(instruction, "Instruction:%s", instructionOutput[(int)maid->getInstructionType()].c_str());
+		logger.add(position);
+		logger.add(hp);
+		logger.add(state);
+		logger.add(instruction);
+
+
 		if (maid->dead())
 		{
 			deadMaid.push_back(maid);
 			mMap->addBlood(maid->getPos(),1);
 		}
 	}
-	//É¾³ıËÀÍöµÄÅ®ÆÍ
+	//åˆ é™¤æ­»äº¡çš„å¥³ä»†
 	for (auto& maid : deadMaid)
 		mMaidManager->deleteMaid(maid);
+}
+Log& GameManager::getLog()
+{
+	return logger;
 }
