@@ -20,12 +20,14 @@ int main(int argc, char ** argv)
 	SDL_Renderer * renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	game = make_shared<GameManager>();
 	game->loadGame("test.txt");
+
+	string AP = getAbsolutePath(argv[0]);
+
+	// cout << (AP + "\\consola.ttf").c_str();
 	
-	TTF_Font * font = TTF_OpenFont("C:\\Users\\axunl\\source\\repos\\FlandreEscape\\consola.ttf", 12);
-	SDL_Texture * text;
-	SDL_Surface * maidStateDisplay;
+	TTF_Font * font = TTF_OpenFont((AP + "\\consola.ttf").c_str(), 12);
 	SDL_Color textColor = { 255 , 255 , 255 };
-	SDL_Rect pos = { 10, 100, 200, 20 }, clip;
+	SDL_Rect pos = { 10, 100, 200, 20 };
 
 	/// Main event loop
 	bool quit = false;
