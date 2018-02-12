@@ -29,8 +29,11 @@ int main(int argc, char** argv)
 	// perpare resources
 	TTF_Font * font = TTF_OpenFont((AP + "\\consola.ttf").c_str(), 12);
 	SDL_Color textColor = { 255 , 0 , 0 };
-	SDL_Rect groundClip = { 0, 0, 100, 100 }, groundDesPos, maidClip = { 179, 302, 50, 50 };
-	SDL_Texture * ground = IMG_LoadTexture(renderer, (AP + "\\box.bmp").c_str());
+	SDL_Rect groundClip = { 0, 0, 50, 50 }, groundDesPos, maidClip = { 179, 302, 50, 50 };
+	SDL_Texture * ground = IMG_LoadTexture(renderer, (AP + "\\box.tga").c_str()),
+		*oscar = IMG_LoadTexture(renderer, (AP + "\\oscar.png").c_str());
+	SDL_Rect oscarLocation = { 300, 10, 0, 0 };
+	SDL_QueryTexture(oscar, NULL, NULL, &oscarLocation.w, &oscarLocation.h);
 
 
 	/// Main event loop
@@ -53,7 +56,7 @@ int main(int argc, char** argv)
 			}
 		}
 		SDL_RenderClear(renderer);
-		
+
 		// draw map
 		int gSize = 50;
 		auto map = game->getMap();
@@ -74,6 +77,9 @@ int main(int argc, char** argv)
 		// log 
 		auto message = game->getLog().getLast(15);
 		RenderText(renderer, message, font, textColor, 10, 200);
+
+		//oscar
+		SDL_RenderCopy(renderer, oscar, NULL, &oscarLocation);
 
 		SDL_RenderPresent(renderer);
 	}
