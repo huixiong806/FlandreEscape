@@ -12,6 +12,7 @@ const int interval = 1;
 shared_ptr<GameManager>game;
 int main(int argc, char** argv)
 {
+	srand(time(0));
 	if (SDL_Init(SDL_INIT_EVERYTHING) + TTF_Init())
 	{
 		cerr << "Failed to init SDL : \n" << SDL_GetError() << "\n" << TTF_GetError();
@@ -56,31 +57,29 @@ int main(int argc, char** argv)
 			}
 		}
 		SDL_RenderClear(renderer);
-
+		//game->update();
 		// draw map
 		int gSize = 50;
-		auto map = game->getMap();
-		int c = map.getSizeC(), r = map.getSizeR();
+		auto map = game->getMapPtr();
+		int c = map->getSizeC(), r = map->getSizeR();
 		groundDesPos = { 0, 0, gSize, gSize };
 		for (; groundDesPos.y < c * gSize; groundDesPos.y += gSize)
 			for (groundDesPos.x = 0; groundDesPos.x < r * gSize; groundDesPos.x += gSize)
 				RenderImage(renderer, ground, groundDesPos, groundClip);
 		// draw maids
-		auto maids = game->getMaids();
-		for (auto maid : maids)
+		auto maids = game->getMaidSetPtr();
+		for (auto maid : *maids)
 		{
 			int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
-			SDL_Rect maidPos = { x, y, gSize, gSize };
+			SDL_Rect maidPos = {y,x, gSize, gSize };
 			RenderImage(renderer, ground, maidPos, maidClip);
 		}
 
 		// log 
-		auto message = game->getLog().getLast(15);
+		auto message = game->getLog()->getLast(15);
 		RenderText(renderer, message, font, textColor, 10, 200);
-
 		//oscar
 		SDL_RenderCopy(renderer, oscar, NULL, &oscarLocation);
-
 		SDL_RenderPresent(renderer);
 	}
 	SDL_DestroyRenderer(renderer);

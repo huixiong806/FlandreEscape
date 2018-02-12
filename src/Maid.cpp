@@ -1,9 +1,12 @@
 #include"Maid.h"
+#include<sstream>
+const std::string maidName[12] = { "Sakuya","Daiyousei","Lily","Marisa","Reimu","Sanae","Satori","Koishi","Remilia","Patchouli","Koakuma","Cirno"};
 Maid::Maid(int pos)
 {
 	this->setPos(pos);
 	this->setHp(this->getHpLimit());
-	this->setName("nameless maid");
+	std::stringstream ss;
+	this->setName(maidName[rand()%12]);
 	this->mState = MaidState::STOP;
 	this->mCurInstruction = Instruction(InstructionType::NUL,std::vector<int>());
 }

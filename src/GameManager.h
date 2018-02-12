@@ -9,6 +9,7 @@
 #include"Log.hpp"
 //class InfoManager;
 //class MaidManager;
+class Log;
 class GameManager
 {
 private:
@@ -17,12 +18,12 @@ private:
 	std::shared_ptr<FlandreScarlet> mFlan;
 	std::shared_ptr<Map> mMap;
 	std::vector<std::string> info;
-	Log logger;
+	std::shared_ptr<Log> mLogger;
 public:
 	GameManager();
 	void loadGame(std::string fileName);
 	void update();
-	Log& getLog();
-	Map& getMap();
-	std::unordered_set<std::shared_ptr<Maid>> getMaids();
+	std::shared_ptr<Log> getLog();
+	std::shared_ptr<Map> getMapPtr();
+	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> getMaidSetPtr();
 };

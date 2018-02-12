@@ -35,3 +35,7 @@ void Object::setName(const std::string& str)
 {
 	mName = str;
 }
+std::string Object::getName()
+{
+	return mName;
+}

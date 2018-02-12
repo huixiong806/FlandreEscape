@@ -11,3 +11,7 @@ const int FlandreScarlet::getHpRecoverPerTick()
 {
 	return mHpRecoverPerTick;
 }
+void FlandreScarlet::update(std::shared_ptr<InfoManager> info)
+{
+
+}
