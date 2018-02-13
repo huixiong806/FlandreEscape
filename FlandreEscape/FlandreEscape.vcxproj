@@ -149,11 +149,14 @@
     <ClInclude Include="..\src\MaidManager.h" />
     <ClInclude Include="..\src\Object.h" />
     <ClInclude Include="..\src\InfoManager.h" />
+    <ClInclude Include="..\src\SpriteSheet.h" />
     <ClInclude Include="..\src\Toolset.hpp" />
     <ClInclude Include="..\src\Vec2.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\x64\Debug\box.bmp" />
+    <Image Include="..\x64\Debug\box.tga" />
+    <Image Include="..\x64\Debug\oscar.png" />
+    <Image Include="..\x64\Debug\th.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

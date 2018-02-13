@@ -77,9 +77,18 @@
     <ClInclude Include="..\src\Constants.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\SpriteSheet.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\x64\Debug\box.bmp">
+    <Image Include="..\x64\Debug\box.tga">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\x64\Debug\oscar.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\x64\Debug\th.png">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

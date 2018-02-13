@@ -7,11 +7,13 @@
 #include<vector>
 #include"Log.hpp"
 #include"Toolset.hpp"
+#include"SpriteSheet.h"
 using namespace std;
 const int interval = 1;
 shared_ptr<GameManager>game;
 int main(int argc, char** argv)
 {
+	InitSpriteSheet();
 	srand(time(0));
 	if (SDL_Init(SDL_INIT_EVERYTHING) + TTF_Init())
 	{
@@ -30,10 +32,11 @@ int main(int argc, char** argv)
 	// perpare resources
 	TTF_Font * font = TTF_OpenFont((AP + "\\consola.ttf").c_str(), 12);
 	SDL_Color textColor = { 255 , 0 , 0 };
-	SDL_Rect groundClip = { 0, 0, 50, 50 }, groundDesPos, maidClip = { 179, 302, 50, 50 };
+	SDL_Rect  groundDesPos;
 	SDL_Texture * ground = IMG_LoadTexture(renderer, (AP + "\\box.tga").c_str()),
-		*oscar = IMG_LoadTexture(renderer, (AP + "\\oscar.png").c_str());
-	SDL_Rect oscarLocation = { 300, 10, 0, 0 };
+		* oscar = IMG_LoadTexture(renderer, (AP + "\\oscar.png").c_str()),
+		* maidTex = IMG_LoadTexture(renderer, (AP + "\\th.png").c_str());
+	SDL_Rect oscarLocation = { 500, 300, 0, 0 };
 	//SDL_QueryTexture(oscar, NULL, NULL, &oscarLocation.w, &oscarLocation.h);
 
 
@@ -42,7 +45,7 @@ int main(int argc, char** argv)
 	SDL_Event e;
 	while (!quit)
 	{
-		while (SDL_PollEvent(&e))
+		if (SDL_PollEvent(&e))
 		{
 			switch (e.type)
 			{
@@ -52,10 +55,13 @@ int main(int argc, char** argv)
 				switch (e.key.keysym.sym)
 				{
 				case SDLK_RETURN:
-					game->update();
+					;
 				}
 			}
 		}
+
+		game->update();
+
 		SDL_RenderClear(renderer);
 		//game->update();
 		// draw map
@@ -72,14 +78,16 @@ int main(int argc, char** argv)
 		{
 			//int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
 			SDL_Rect maidPos = { maid->getCoord().y- girdSize*0.5,maid->getCoord().x- girdSize*0.5, gSize, gSize };
-			RenderImage(renderer, ground, maidPos, maidClip);
+			RenderImage(renderer, maidTex, maidPos, maidClip[maid->getName()]);
 		}
 
 		// log 
-		auto message = game->getLog()->getLast(15);
+		auto message = game->getLog()->getLast(18);
 		RenderText(renderer, message, font, textColor, 10, 200);
+
 		//oscar
 		SDL_RenderCopy(renderer, oscar, NULL, &oscarLocation);
+
 		SDL_RenderPresent(renderer);
 	}
 	SDL_DestroyRenderer(renderer);
