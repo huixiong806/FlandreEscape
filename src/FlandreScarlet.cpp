@@ -1,4 +1,10 @@
 #include "FlandreScarlet.h"
+FlandreScarlet::FlandreScarlet()
+{
+	this->setName("Flandre");
+	this->setPos(0);
+	this->setCoord(InfoManager::getCoordByPos(this->getPos()));
+}
 const int FlandreScarlet ::getHpLimit()
 {
 	return mHpLimit;

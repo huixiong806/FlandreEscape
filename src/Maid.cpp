@@ -10,7 +10,7 @@ Maid::Maid(int pos)
 	this->setName(maidName[rand()%12]);
 	this->mState = MaidState::STOP;
 	this->mCurInstruction = Instruction(InstructionType::NUL,std::vector<int>());
-	mSpeed = 2.0;
+	mSpeed = 1.5;
 }
 Maid::Maid()
 {
@@ -21,7 +21,7 @@ Maid::Maid()
 	this->setName(maidName[rand() % 12]);
 	this->mState = MaidState::STOP;
 	this->mCurInstruction = Instruction(InstructionType::NUL, std::vector<int>());
-	mSpeed = 2.0;
+	mSpeed = 1.5;
 }
 Maid::~Maid()
 {
