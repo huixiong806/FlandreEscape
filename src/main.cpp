@@ -78,8 +78,12 @@ int main(int argc, char** argv)
 		{
 			//int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
 			SDL_Rect maidPos = { maid->getCoord().y- girdSize*0.5,maid->getCoord().x- girdSize*0.5, gSize, gSize };
-			RenderImage(renderer, maidTex, maidPos, maidClip[maid->getName()]);
+			RenderImage(renderer, maidTex, maidPos, characterClip[maid->getName()]);
 		}
+		//draw flan
+		auto flan=game->getFlanPtr();
+		SDL_Rect maidPos = { flan->getCoord().y - girdSize * 0.5,flan->getCoord().x - girdSize * 0.5, gSize, gSize };
+		RenderImage(renderer, maidTex, maidPos, characterClip[flan->getName()]);
 
 		// log 
 		auto message = game->getLog()->getLast(18);

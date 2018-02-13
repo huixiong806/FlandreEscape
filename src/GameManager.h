@@ -10,7 +10,6 @@
 //class InfoManager;
 //class MaidManager;
 class Log;
-
 class GameManager
 {
 private:
@@ -25,5 +24,6 @@ public:
 	void update();
 	std::shared_ptr<Log> getLog();
 	std::shared_ptr<Map> getMapPtr();
+	std::shared_ptr<FlandreScarlet> getFlanPtr() { return mFlan; }
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> getMaidSetPtr();
 };
