@@ -9,12 +9,12 @@ GameManager::GameManager()
 void GameManager::loadGame(std::string fileName)
 {
 	mMap = std::make_shared<Map>(8,8);
+	InfoManager::bind(this->mMap);
 	mFlan = std::make_shared<FlandreScarlet>();
+	InfoManager::bind(this->mFlan);
 	mMaidManager = std::make_shared<MaidManager>();
 	InfoManager::bind(mMaidManager->getMaidSetPtr());
 	InfoManager::bind(mMaidManager->getAlertPtr());
-	InfoManager::bind(this->mFlan);
-	InfoManager::bind(this->mMap);
 }
 void GameManager::update()
 {
