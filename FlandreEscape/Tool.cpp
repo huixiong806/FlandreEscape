@@ -1,10 +1,5 @@
-#pragma once
-#ifndef TOOL_SET_H
-#define TOOL_SET_H
-#include <SDL2\SDL.h>
-#include <SDL2\SDL_ttf.h>
-#include <vector>
-#include <string>
+#include "Tool.h"
+
 int RenderText(SDL_Renderer * r, std::vector<std::string> message, TTF_Font * font,
 	SDL_Color textColor, int x = 10, int y = 10)
 {
@@ -24,6 +19,7 @@ int RenderText(SDL_Renderer * r, std::vector<std::string> message, TTF_Font * fo
 	}
 	return pos.y;
 }
+
 int RenderText(SDL_Renderer * r, std::string message, TTF_Font * font,
 	SDL_Color textColor, int x = 10, int y = 10)
 {
@@ -42,14 +38,15 @@ int RenderText(SDL_Renderer * r, std::string message, TTF_Font * font,
 	}
 	return pos.y;
 }
+
 void RenderImage(SDL_Renderer * r, SDL_Texture * tex, SDL_Rect pos, SDL_Rect clip)
 {   // 未来可能改用SDL_RendererCopyEX，先封装一个再说
 	SDL_RenderCopy(r, tex, &clip, &pos);
 }
+
 std::string getAbsolutePath(char* argv)
 {
 	std::string str(argv);
 	str = str.substr(0, str.find_last_of("FlandreEscape.exe") - sizeof("FlandreEscape.exe") + 1);
 	return str;
 }
-#endif

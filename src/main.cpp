@@ -5,9 +5,9 @@
 #include<SDL2\SDL_ttf.h>
 #include<SDL2\SDL_image.h>
 #include<vector>
-#include"Log.hpp"
-#include"Toolset.hpp"
+#include"Tool.h"
 #include"SpriteSheet.h"
+#include"Console.hpp"
 using namespace std;
 const int interval = 1;
 shared_ptr<GameManager>game;
@@ -39,7 +39,8 @@ int main(int argc, char** argv)
 	SDL_Rect oscarLocation = { 500, 300, 0, 0 };
 	//SDL_QueryTexture(oscar, NULL, NULL, &oscarLocation.w, &oscarLocation.h);
 
-
+	Console::Init(10, 200, 18, AP);
+	
 	/// Main event loop
 	bool quit = false;
 	SDL_Event e;
@@ -78,11 +79,11 @@ int main(int argc, char** argv)
 		{
 			//int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
 			SDL_Rect maidPos = { maid->getCoord().y- girdSize*0.5,maid->getCoord().x- girdSize*0.5, gSize, gSize };
-			RenderImage(renderer, maidTex, maidPos, maidClip[maid->getName()]);
+			RenderImage(renderer, maidTex, maidPos, characterClip[maid->getName()]);
 		}
 
 		// log 
-		auto message = game->getLog()->getLast(18);
+		auto message = Console::getLast(18);
 		RenderText(renderer, message, font, textColor, 10, 200);
 
 		//oscar
@@ -90,6 +91,7 @@ int main(int argc, char** argv)
 
 		SDL_RenderPresent(renderer);
 	}
+	//scene1(AP, renderer);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(win);
 	SDL_Quit();

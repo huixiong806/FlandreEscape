@@ -10,13 +10,11 @@ void GameManager::loadGame(std::string fileName)
 {
 	mMap = std::make_shared<Map>(8,8);
 	mFlan = std::make_shared<FlandreScarlet>();
-	mLogger = std::make_shared<Log>();
 	mMaidManager = std::make_shared<MaidManager>();
 	InfoManager::bind(mMaidManager->getMaidSetPtr());
 	InfoManager::bind(mMaidManager->getAlertPtr());
 	InfoManager::bind(this->mFlan);
 	InfoManager::bind(this->mMap);
-	InfoManager::bind(this->mLogger);
 }
 void GameManager::update()
 {
@@ -25,10 +23,6 @@ void GameManager::update()
 	mFlan->update();
 	mMaidManager->update();
 	std::cout << "MaidCount:" << maidSet->size() << std::endl;
-}
-std::shared_ptr<Log> GameManager::getLog()
-{
-	return mLogger;
 }
 std::shared_ptr<Map> GameManager::getMapPtr()
 {

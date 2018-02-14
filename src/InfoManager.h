@@ -1,7 +1,7 @@
 #pragma once
 #include<memory>
 #include"Constants.h"
-#include"Log.hpp"
+#include"Console.h"
 #include"Maid.h"
 #include"Map.h"
 #include"FlandreScarlet.h"
@@ -17,7 +17,6 @@ private:
 	static std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> mMaid;
 	static std::shared_ptr<FlandreScarlet> mFlan;
 	static std::shared_ptr<bool> mAlertIsOn;
-	static std::shared_ptr<Log> mLogger;
 public:
 	//Game 绑定芙兰
 	static void bind(std::shared_ptr<FlandreScarlet> flan);
@@ -27,8 +26,6 @@ public:
 	static void bind(std::shared_ptr<bool> alert);
 	//Game 绑定地图
 	static void bind(std::shared_ptr<Map> map);
-	//Game 绑定Logger
-	static void bind(std::shared_ptr<Log> logger);
 	//Maid 是否有警报
 	static bool haveAlert();
 	//Maid 是否能看到芙兰
@@ -45,8 +42,6 @@ public:
 	static std::vector<int> getPath(std::shared_ptr<Maid> maid, int targetPos);
 	//通用 获取路径(不包括起点，包括终点)
 	static std::vector<int> getPath(int startPos, int targetPos);
-	//通用 获取logger
-	static std::shared_ptr<Log> getLogger();
 	//通用 想要移动到某个格子，应该往哪个方向走？返回一个单位向量
 	static Vec2d getTheDirectionTo(Vec2d startPos, int tarPos);
 	//通用 根据实数坐标确定位置

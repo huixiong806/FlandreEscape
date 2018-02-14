@@ -1,6 +1,8 @@
 #pragma once
 #include"Maid.h"
+#include<sstream>
 #include <unordered_set>
+#include"Console.h"
 enum class MaidManagerStateType
 {
 	NORMAL,

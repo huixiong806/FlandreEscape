@@ -3,7 +3,6 @@ std::shared_ptr<Map> InfoManager::mMap;
 std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> InfoManager::mMaid;
 std::shared_ptr<FlandreScarlet> InfoManager::mFlan;
 std::shared_ptr<bool> InfoManager::mAlertIsOn;
-std::shared_ptr<Log> InfoManager::mLogger;
 void InfoManager::bind(std::shared_ptr<FlandreScarlet> flan)
 {
 	mFlan = flan;
@@ -19,10 +18,6 @@ void InfoManager::bind(std::shared_ptr<bool> alert)
 void InfoManager::bind(std::shared_ptr<Map> map)
 {
 	mMap= map;
-}
-void InfoManager::bind(std::shared_ptr<Log> logger)
-{
-	mLogger = logger;
 }
 bool InfoManager::haveAlert()
 {
@@ -61,11 +56,6 @@ std::vector<int> InfoManager::getPath(std::shared_ptr<Maid> maid, int targetPos)
 std::vector<int> InfoManager::getPath(int startPos, int targetPos)
 {
 	return mMap->getWayPoints(startPos, targetPos);
-}
-//通用 获取logger
-std::shared_ptr<Log> InfoManager::getLogger()
-{
-	return mLogger;
 }
 //通用 想要移动到某个格子，应该往哪个方向走？返回一个单位向量
 Vec2d InfoManager::getTheDirectionTo(Vec2d startPos, int tarPos)

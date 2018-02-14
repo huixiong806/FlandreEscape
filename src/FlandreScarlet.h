@@ -16,5 +16,6 @@ private:
 	const int getDamage();
 	const int getHpRecoverPerTick();
 public:
+	FlandreScarlet();
 	void update();
 };
