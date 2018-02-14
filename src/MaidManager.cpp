@@ -74,21 +74,28 @@ void MaidManager::update()
 		**/
 		//update info
 		// Test new log class
-		Console::add(maid->getName());
 		//char position[100], hp[100], state[100], instruction[100];v
-		std::stringstream pos, hp, state, insruction, wayp;
-		pos << "Pos:" << maid->getPos();
-		hp << "Hp:" << maid->getHp();
-		state << "State:" << maidStateOutput[(int)maid->getState()];
-		insruction << "Instruction:" << instructionOutput[(int)maid->getInstructionType()];
-		wayp << "WayPoint:";
-		auto wayPoint = maid->getWayPoint();
-		for (auto i : wayPoint)wayp << i.pos << ",";
-		Console::add(pos.str());
-		Console::add(hp.str());
-		Console::add(state.str());
-		Console::add(insruction.str());
-		Console::add(wayp.str());
+		
+		if (Console::getFlag("maidStatus"))
+		{
+			Console::add(maid->getName());
+		
+			std::stringstream pos, hp, state, insruction, wayp;
+			pos << "Pos:" << maid->getPos();
+			hp << "Hp:" << maid->getHp();
+			state << "State:" << maidStateOutput[(int)maid->getState()];
+			insruction << "Instruction:" << instructionOutput[(int)maid->getInstructionType()];
+			wayp << "WayPoint:";
+			auto wayPoint = maid->getWayPoint();
+			for (auto i : wayPoint)wayp << i.pos << ",";
+			Console::add(pos.str());
+			Console::add(hp.str());
+			Console::add(state.str());
+			Console::add(insruction.str());
+			Console::add(wayp.str());
+		}
+		
+
 		if (maid->dead())
 		{
 			deadMaid.push_back(maid);

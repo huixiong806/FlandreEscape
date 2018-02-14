@@ -26,7 +26,7 @@ int RenderText(SDL_Renderer * r, std::string message, TTF_Font * font,
 	static int interval = 1;
 	SDL_Surface * maidStateDisplay;
 	SDL_Texture * text;
-	SDL_Rect pos = { x, y, 0, 0 };
+	SDL_Rect pos = { x, y, 200, 300 };
 	{
 		maidStateDisplay = TTF_RenderText_Blended(font, message.c_str(), textColor);
 		text = SDL_CreateTextureFromSurface(r, maidStateDisplay);

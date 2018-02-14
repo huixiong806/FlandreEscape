@@ -10,6 +10,8 @@
 #include <SDL2\SDL.h>
 #include <SDL2\SDL_ttf.h>
 #include <memory>
+#include <iostream>
+#include <map>
 using namespace std;
 
 
@@ -26,9 +28,12 @@ private:
 	static string path;
 	static SDL_Color logColor;
 	static SDL_Color conColor;
+	static map<string, bool> flags;
 public:
 	// 配置参数
 	static void Init(int x, int y, int h, string& AP);
+	// 获取状态标记
+	static bool getFlag(string str);
 	// 记录日志
 	static void add(string log);
 	

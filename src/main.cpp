@@ -7,7 +7,7 @@
 #include<vector>
 #include"Tool.h"
 #include"SpriteSheet.h"
-#include"Console.hpp"
+#include"Console.h"
 using namespace std;
 const int interval = 1;
 shared_ptr<GameManager>game;
@@ -46,18 +46,14 @@ int main(int argc, char** argv)
 	SDL_Event e;
 	while (!quit)
 	{
-		if (SDL_PollEvent(&e))
+		while (SDL_PollEvent(&e))
 		{
 			switch (e.type)
 			{
 			case SDL_QUIT:
 				quit = true;
 			case SDL_KEYDOWN:
-				switch (e.key.keysym.sym)
-				{
-				case SDLK_RETURN:
-					;
-				}
+				Console::input(e.key);
 			}
 		}
 
@@ -83,8 +79,7 @@ int main(int argc, char** argv)
 		}
 
 		// log 
-		auto message = Console::getLast(18);
-		RenderText(renderer, message, font, textColor, 10, 200);
+		Console::print(renderer);
 
 		//oscar
 		SDL_RenderCopy(renderer, oscar, NULL, &oscarLocation);

@@ -8,7 +8,7 @@ GameManager::GameManager()
 }
 void GameManager::loadGame(std::string fileName)
 {
-	mMap = std::make_shared<Map>(8,8);
+	mMap = std::make_shared<Map>(8, 8);
 	InfoManager::bind(this->mMap);
 	mFlan = std::make_shared<FlandreScarlet>();
 	InfoManager::bind(this->mFlan);
