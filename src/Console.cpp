@@ -75,25 +75,33 @@ void Console::input(SDL_KeyboardEvent key)
 	}
 	else
 	{
-		if (enableConsole && key.keysym.sym >= 32 && key.keysym.sym <= 255)
+		if (enableConsole)
 		{
-			if(isgraph(key.keysym.sym) && !isupper(key.keysym.sym) || isspace(key.keysym.sym))
+			if (key.keysym.sym >= 32 && key.keysym.sym <= 255)
 			{
-			
-				if (key.keysym.mod == 0x1000)
-					command += key.keysym.sym;
-				else if (~key.keysym.mod & KMOD_CAPS)
-					command += isalpha(key.keysym.sym) && (~key.keysym.sym & KMOD_SHIFT) ? toupper(key.keysym.sym) : key.keysym.sym;
-				else if (key.keysym.sym & KMOD_SHIFT)
-					command += isalpha(key.keysym.sym) ? toupper(key.keysym.sym) : key.keysym.sym;
+				if (isgraph(key.keysym.sym) && !isupper(key.keysym.sym) || isspace(key.keysym.sym))
+				{
+
+					if (key.keysym.mod == 0x1000)
+						command += key.keysym.sym;
+					else if (~key.keysym.mod & KMOD_CAPS)
+						command += isalpha(key.keysym.sym) && (~key.keysym.sym & KMOD_SHIFT) ? toupper(key.keysym.sym) : key.keysym.sym;
+					else if (key.keysym.sym & KMOD_SHIFT)
+						command += isalpha(key.keysym.sym) ? toupper(key.keysym.sym) : key.keysym.sym;
+					// std::cout << command << "\n";
+				}
+			}
+			if (key.keysym.sym == SDLK_RETURN)
+			{
+				purge();
 				// std::cout << command << "\n";
 			}
+			if (key.keysym.sym == SDLK_DOWN || key.keysym.sym == SDLK_UP)
+			{
+				// get previous command
+			}
 		}
-		if(enableConsole && key.keysym.sym == SDLK_RETURN)
-		{
-			purge();
-			// std::cout << command << "\n";
-		}
+		
 		if (!enableConsole && (key.keysym.sym == SDLK_DOWN || key.keysym.sym == SDLK_UP || key.keysym.sym == SDLK_LEFT || key.keysym.sym == SDLK_RIGHT || key.keysym.sym == SDLK_c))
 		{
 			cout << "event! " << (key.keysym.sym == SDLK_c) << "\n";
