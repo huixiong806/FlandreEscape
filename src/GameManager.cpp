@@ -22,7 +22,7 @@ void GameManager::update()
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maidSet = mMaidManager->getMaidSetPtr();
 	mFlan->update();
 	mMaidManager->update();
-	std::cout << "MaidCount:" << maidSet->size() << std::endl;
+	//std::cout << "MaidCount:" << maidSet->size() << std::endl;
 }
 std::shared_ptr<Map> GameManager::getMapPtr()
 {

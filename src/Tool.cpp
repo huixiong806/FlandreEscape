@@ -9,6 +9,7 @@ int RenderText(SDL_Renderer * r, std::vector<std::string> message, TTF_Font * fo
 	SDL_Rect pos = { x, y, 0, 0 };
 	for (auto i : message)
 	{
+		i == "" ? i = " " : i;
 		maidStateDisplay = TTF_RenderText_Blended(font, i.c_str(), textColor);
 		text = SDL_CreateTextureFromSurface(r, maidStateDisplay);
 		SDL_QueryTexture(text, NULL, NULL, &pos.w, &pos.h);

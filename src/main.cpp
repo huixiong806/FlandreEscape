@@ -20,6 +20,7 @@ int main(int argc, char** argv)
 		cerr << "Failed to init SDL : \n" << SDL_GetError() << "\n" << TTF_GetError();
 		return -1;
 	}
+	atexit(SDL_Quit);
 	SDL_Window * win = SDL_CreateWindow("Flandre Escape", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	SDL_Renderer * renderer = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	game = make_shared<GameManager>();
@@ -46,8 +47,10 @@ int main(int argc, char** argv)
 	SDL_Event e;
 	while (!quit)
 	{
+		
 		while (SDL_PollEvent(&e))
 		{
+			cout << hex << e.key.keysym.mod << "\n";
 			switch (e.type)
 			{
 			case SDL_QUIT:
@@ -80,7 +83,7 @@ int main(int argc, char** argv)
 
 		// log 
 		Console::print(renderer);
-
+		
 		//oscar
 		SDL_RenderCopy(renderer, oscar, NULL, &oscarLocation);
 
