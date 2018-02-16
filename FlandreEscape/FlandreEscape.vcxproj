@@ -129,21 +129,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Console.cpp" />
     <ClCompile Include="..\src\FlandreScarlet.cpp" />
     <ClCompile Include="..\src\GameManager.cpp" />
     <ClCompile Include="..\src\InfoManager.cpp" />
+    <ClCompile Include="..\src\Log.cpp" />
     <ClCompile Include="..\src\Maid.cpp" />
     <ClCompile Include="..\src\MaidManager.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Map.cpp" />
     <ClCompile Include="..\src\Object.cpp" />
+    <ClCompile Include="..\src\Tool.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Console.hpp" />
+    <ClInclude Include="..\src\Console.h" />
     <ClInclude Include="..\src\Constants.h" />
     <ClInclude Include="..\src\FlandreScarlet.h" />
     <ClInclude Include="..\src\GameManager.h" />
-    <ClInclude Include="..\src\Log.hpp" />
+    <ClInclude Include="..\src\Log.h" />
     <ClInclude Include="..\src\Map.h" />
     <ClInclude Include="..\src\Instruction.h" />
     <ClInclude Include="..\src\Maid.h" />
@@ -151,8 +154,7 @@
     <ClInclude Include="..\src\Object.h" />
     <ClInclude Include="..\src\InfoManager.h" />
     <ClInclude Include="..\src\SpriteSheet.h" />
-    <ClInclude Include="..\src\Stage.hpp" />
-    <ClInclude Include="..\src\Toolset.hpp" />
+    <ClInclude Include="..\src\Tool.h" />
     <ClInclude Include="..\src\Vec2.hpp" />
   </ItemGroup>
   <ItemGroup>

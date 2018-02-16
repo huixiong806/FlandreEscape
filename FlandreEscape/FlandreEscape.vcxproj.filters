@@ -39,6 +39,15 @@
     <ClCompile Include="..\src\MaidManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Tool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Log.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Console.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\MaidManager.h">
@@ -65,12 +74,6 @@
     <ClInclude Include="..\src\Map.h">
       <Filter>源文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Log.hpp">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Toolset.hpp">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Vec2.hpp">
       <Filter>源文件</Filter>
     </ClInclude>
@@ -78,6 +81,15 @@
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="..\src\SpriteSheet.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Tool.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Console.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Log.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
