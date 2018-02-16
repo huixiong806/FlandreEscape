@@ -24,7 +24,7 @@ void Console::Init(int x, int y, int h, string& AP)
 	font = TTF_OpenFont((AP + "\\consola.ttf").c_str(), 12);
 	logColor = { 255, 0, 0 };
 	conColor = { 255, 255, 255 };
-	flags["maidStatus"] = 0;
+	flags["maidStatus"] = 1;
 	enableConsole = true;
 }
 int Console::getFlag(string str)
@@ -66,62 +66,59 @@ void Console::purge()
 	}
 	command = "";
 }
-void Console::input(SDL_KeyboardEvent key)
+void Console::input(SDL_KeyboardEvent key,uint32_t type)
 {
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
-	if (state[SDL_SCANCODE_GRAVE])
+	if (state[SDL_SCANCODE_GRAVE] && type == SDL_KEYDOWN)
 	{
 		enableConsole = !enableConsole;
+		return;
 	}
-	else
+	if (enableConsole&&type == SDL_KEYDOWN)
 	{
-		if (enableConsole)
+		if (key.keysym.sym >= 32 && key.keysym.sym <= 255)
 		{
-			if (key.keysym.sym >= 32 && key.keysym.sym <= 255)
+			if (isgraph(key.keysym.sym) && !isupper(key.keysym.sym) || isspace(key.keysym.sym))
 			{
-				if (isgraph(key.keysym.sym) && !isupper(key.keysym.sym) || isspace(key.keysym.sym))
-				{
 
-					if (key.keysym.mod == 0x1000)
-						command += key.keysym.sym;
-					else if (~key.keysym.mod & KMOD_CAPS)
-						command += isalpha(key.keysym.sym) && (~key.keysym.sym & KMOD_SHIFT) ? toupper(key.keysym.sym) : key.keysym.sym;
-					else if (key.keysym.sym & KMOD_SHIFT)
-						command += isalpha(key.keysym.sym) ? toupper(key.keysym.sym) : key.keysym.sym;
-					// std::cout << command << "\n";
-				}
-			}
-			if (key.keysym.sym == SDLK_RETURN)
-			{
-				purge();
+				if (key.keysym.mod == 0x1000)
+					command += key.keysym.sym;
+				else if (~key.keysym.mod & KMOD_CAPS)
+					command += isalpha(key.keysym.sym) && (~key.keysym.sym & KMOD_SHIFT) ? toupper(key.keysym.sym) : key.keysym.sym;
+				else if (key.keysym.sym & KMOD_SHIFT)
+					command += isalpha(key.keysym.sym) ? toupper(key.keysym.sym) : key.keysym.sym;
 				// std::cout << command << "\n";
 			}
-			if (key.keysym.sym == SDLK_DOWN || key.keysym.sym == SDLK_UP)
-			{
-				// get previous command
-			}
 		}
-		
-		if (!enableConsole && (key.keysym.sym == SDLK_DOWN || key.keysym.sym == SDLK_UP || key.keysym.sym == SDLK_LEFT || key.keysym.sym == SDLK_RIGHT || key.keysym.sym == SDLK_c))
+		if (key.keysym.sym == SDLK_RETURN)
 		{
-			cout << "event! " << (key.keysym.sym) << "\n";
-			switch (key.keysym.sym)
-			{
-			case SDLK_DOWN:
-				signal["flanMoveDown"] = true; break;
-			case SDLK_UP:
-				signal["flanMoveUp"] = true; break;
-			case SDLK_LEFT:
-				signal["flanMoveLeft"] = true; break;
-			case SDLK_RIGHT:
-				signal["flanMoveRight"] = true; break;
-			case SDLK_c:
-				signal["flanAttack"] = true; break;
-			}
+			purge();
+			// std::cout << command << "\n";
+		}
+		if (key.keysym.sym == SDLK_DOWN || key.keysym.sym == SDLK_UP)
+		{
+			// get previous command
 		}
 	}
-	
 		
+	if (!enableConsole && (key.keysym.sym == SDLK_DOWN || key.keysym.sym == SDLK_UP || key.keysym.sym == SDLK_LEFT || key.keysym.sym == SDLK_RIGHT || key.keysym.sym == SDLK_c))
+	{
+		cout << "event! " << (key.keysym.sym) << "\n";
+		bool state = type == SDL_KEYDOWN ? true : false;
+		switch (key.keysym.sym)
+		{
+		case SDLK_DOWN:
+			signal["flanMoveDown"] = state; break;
+		case SDLK_UP:
+			signal["flanMoveUp"] = state; break;
+		case SDLK_LEFT:
+			signal["flanMoveLeft"] = state; break;
+		case SDLK_RIGHT:
+			signal["flanMoveRight"] = state; break;
+		case SDLK_c:
+			signal["flanAttack"] = state; break;
+		}
+	}
 }
 void Console::resetAllSignal()
 {

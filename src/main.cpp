@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 	SDL_Event e;
 	while (!quit)
 	{
-		Console::resetAllSignal();
+		//Console::resetAllSignal();
 		while (SDL_PollEvent(&e))
 		{
 			//cout << hex << e.key.keysym.mod << "\n";
@@ -55,9 +55,15 @@ int main(int argc, char** argv)
 			{
 			case SDL_QUIT:
 				quit = true;
+				break;
 			case SDL_KEYDOWN:
-				
-				Console::input(e.key);
+				Console::input(e.key, SDL_KEYDOWN);
+				break;
+			case SDL_KEYUP:
+				Console::input(e.key, SDL_KEYUP);
+				break;
+			default:
+				break;
 			}
 		}
 		
@@ -70,9 +76,13 @@ int main(int argc, char** argv)
 		auto map = game->getMap();
 		int c = map->getSizeC(), r = map->getSizeR();
 		groundDesPos = { 0, 0, gSize, gSize };
-		for (; groundDesPos.y < c * gSize; groundDesPos.y += gSize)
-			for (groundDesPos.x = 0; groundDesPos.x < r * gSize; groundDesPos.x += gSize)
-				RenderImage(renderer, ground, groundDesPos, groundClip);
+		for (int rr = 0; groundDesPos.y < c * gSize; groundDesPos.y += gSize, ++rr)
+		{
+			groundDesPos.x = 0;
+			for (int cc = 0; groundDesPos.x < r * gSize; groundDesPos.x += gSize, ++cc)
+				if (map->getVertex(map->getPos(rr,cc)).getEnable())
+					RenderImage(renderer, ground, groundDesPos, groundClip);
+		}
 		// draw maids
 		auto maids = game->getMaidSet();
 		for (auto maid : *maids)
@@ -83,9 +93,6 @@ int main(int argc, char** argv)
 		}
 		//draw flan
 		auto flan = game->getFlan();
-		//stringstream ss;
-		//ss << (int)flan->getCoord().y - (int)girdSize/2 <<","<< (int)flan->getCoord().x - (int)girdSize/2;
-		//Console::add(ss.str());
 		SDL_Rect flanPos = { flan->getCoord().y - girdSize * 0.5,flan->getCoord().x - girdSize * 0.5, gSize, gSize };
 		RenderImage(renderer, maidTex, flanPos, characterClip[flan->getName()]);
 		// log 

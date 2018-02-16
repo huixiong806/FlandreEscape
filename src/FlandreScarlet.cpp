@@ -33,7 +33,11 @@ void FlandreScarlet::update()
 	if (direction.norm() > 0.0)
 	{
 		direction = direction.unit();
-		this->walk(direction);
-		this->setPos(InfoManager::getPosByCoord(this->getCoord()));
+		Vec2d targetCoord = this->getCoord() + direction *mSpeed;
+		if (InfoManager::vertexIsEnable(InfoManager::getPosByCoord(targetCoord)))
+		{
+			this->walk(direction);
+			this->setPos(InfoManager::getPosByCoord(this->getCoord()));
+		}	
 	}
 }

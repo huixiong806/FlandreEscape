@@ -54,6 +54,8 @@ public:
 	static bool inMid(Vec2d coord, int pos, double eps);
 	//MaidManager 获取指向地图的指针
 	static std::shared_ptr<Map> getMap();
+	//通用 返回点是否是障碍
+	static bool vertexIsEnable(int pos);
 	//Flan 返回所有能看到的女仆
 	//std::vector<std::shared_ptr<Maid>> maidsInSight();
 };

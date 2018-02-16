@@ -9,6 +9,9 @@ GameManager::GameManager()
 void GameManager::loadGame(std::string fileName)
 {
 	mMap = std::make_shared<Map>(8, 8);
+	for (int i = 0; i < 8; ++i)
+		for (int j = 0; j < 8; ++j)
+			mMap->getVertex(mMap->getPos(i, j)).setEnable(testMap[i][j]);
 	InfoManager::bind(this->mMap);
 	mFlan = std::make_shared<FlandreScarlet>();
 	InfoManager::bind(this->mFlan);

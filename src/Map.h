@@ -8,19 +8,21 @@ class Maid;
 class Vertex
 {
 private:
-	bool enabled;
+	bool mEnable;
 	int mBlood;
 	std::unordered_set<std::shared_ptr<Maid>> mMaid;
 public:
 	Vertex()
 	{
-		enabled = true;
+		mEnable = true;
 		mBlood = 0;
 	}
 	int getBlood();
 	void addBlood(int val);
 	void deleteMaid(std::shared_ptr<Maid> maid);
 	void addMaid(std::shared_ptr<Maid> maid);
+	bool getEnable() { return mEnable; }
+	void setEnable(bool enable) { mEnable= enable; }
 };
 class Map
 {

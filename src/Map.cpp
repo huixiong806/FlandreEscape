@@ -61,6 +61,7 @@ std::vector<int> Map::getWayPoints(int startPos, int targetPos)
 			if (nextR < 0 || nextR >= mSizeR)continue;
 			if (nextC < 0 || nextC >= mSizeC)continue;
 			int next = nextR * mSizeC + nextC;
+			if (!mVertex[next].getEnable())continue;
 			if (dist[next] == -1)
 			{
 				dist[next] = dist[now] + 1;

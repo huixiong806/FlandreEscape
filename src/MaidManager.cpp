@@ -48,7 +48,12 @@ void MaidManager::update()
 		if (maid->free())
 		{
 			//ÅÉÈ¥Ñ²Âß
-			maid->receiveInstruction(Instruction(InstructionType::MOVETO, { rand() % InfoManager::getMap()->getSize() }));
+			int pos;
+			do
+			{
+				pos=rand() % InfoManager::getMap()->getSize();
+			} while (!InfoManager::vertexIsEnable(pos));
+			maid->receiveInstruction(Instruction(InstructionType::MOVETO, { pos }));
 		}
 		else maid->receiveInstruction(Instruction(InstructionType::NUL, std::vector<int>()));
 	}
@@ -60,22 +65,6 @@ void MaidManager::update()
 		MaidInfoType maidInfo=maid->update();
 		if (maidInfo == MaidInfoType::ALERT)
 			this->turnOnAlert();
-		/**
-		std::cout << "nameless maid"<<std::endl;
-		std::cout << "Pos:" << maid->getPos() << std::endl;
-		std::cout << "Hp:" << maid->getHp() << std::endl;
-		std::cout << "State:" << maidStateOutput[(int)maid->getState()] << std::endl;
-		std::cout << "WayPoint:";
-		auto wayPoint = maid->getWayPoint();
-		for (auto i : wayPoint)std::cout <<i.pos << ",";
-		std::cout << std::endl;
-		std::cout << "Instruction:" << instructionOutput[(int)maid->getInstructionType()] << std::endl;
-		std::cout<<std::endl;
-		**/
-		//update info
-		// Test new log class
-		//char position[100], hp[100], state[100], instruction[100];v
-		
 		if (Console::getFlag("maidStatus"))
 		{
 			Console::add(maid->getName());

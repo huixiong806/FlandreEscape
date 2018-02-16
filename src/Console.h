@@ -48,7 +48,7 @@ public:
 
 	static void purge();
 	// handle keyboard input
-	static void input(SDL_KeyboardEvent key);
+	static void input(SDL_KeyboardEvent key,uint32_t type);
 	// check signal
 	static bool checkSignal(const string& str);
 	// reset signal

@@ -67,6 +67,7 @@ Vec2d InfoManager::getTheDirectionTo(Vec2d startPos, int tarPos)
 int InfoManager::getPosByCoord(Vec2d coord)
 {
 	coord/= girdSize;
+	if (coord.x < 0 || coord.y < 0||coord.x>=mMap->getSizeR()|| coord.y >= mMap->getSizeC())return -1;
 	return mMap->getPos(coord.x, coord.y);
 }
 Vec2i InfoManager::getPos(int pos)
@@ -92,6 +93,12 @@ bool InfoManager::inMid(Vec2d coord, int pos,double eps)
 std::shared_ptr<Map> InfoManager::getMap()
 {
 	return mMap;
+}
+//通用 返回点是否是障碍
+bool InfoManager::vertexIsEnable(int pos)
+{
+	if (pos < 0||pos>=mMap->getSize())return false;
+	return mMap->getVertex(pos).getEnable();
 }
 /*
 std::vector<std::shared_ptr<Maid>> InfoManager::maidsInSight()
