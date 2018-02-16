@@ -104,19 +104,19 @@ void Console::input(SDL_KeyboardEvent key)
 		
 		if (!enableConsole && (key.keysym.sym == SDLK_DOWN || key.keysym.sym == SDLK_UP || key.keysym.sym == SDLK_LEFT || key.keysym.sym == SDLK_RIGHT || key.keysym.sym == SDLK_c))
 		{
-			cout << "event! " << (key.keysym.sym == SDLK_c) << "\n";
+			cout << "event! " << (key.keysym.sym) << "\n";
 			switch (key.keysym.sym)
 			{
 			case SDLK_DOWN:
-				signal["flanMoveDown"] = true;
+				signal["flanMoveDown"] = true; break;
 			case SDLK_UP:
-				signal["flanMoveUp"] = true;
+				signal["flanMoveUp"] = true; break;
 			case SDLK_LEFT:
-				signal["flanMoveLeft"] = true;
+				signal["flanMoveLeft"] = true; break;
 			case SDLK_RIGHT:
-				signal["flanMoveRight"] = true;
+				signal["flanMoveRight"] = true; break;
 			case SDLK_c:
-				signal["flanAttack"] = true;
+				signal["flanAttack"] = true; break;
 			}
 		}
 	}

@@ -25,7 +25,7 @@ void FlandreScarlet::update()
 	if (Console::checkSignal("flanMoveUp"))
 		direction.x -= 1.0;
 	if (Console::checkSignal("flanMoveDown"))
-		direction.x += 1.0;
+		direction.x -= -1.0;
 	if (Console::checkSignal("flanMoveLeft"))
 		direction.y -= 1.0;
 	if (Console::checkSignal("flanMoveRight"))
