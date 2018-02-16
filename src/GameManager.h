@@ -22,6 +22,7 @@ public:
 	GameManager();
 	void loadGame(std::string fileName);
 	void update();
-	std::shared_ptr<Map> getMapPtr();
-	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> getMaidSetPtr();
+	std::shared_ptr<Map> getMap();
+	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> getMaidSet();
+	std::shared_ptr<FlandreScarlet> getFlan();
 };

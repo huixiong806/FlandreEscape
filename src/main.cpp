@@ -47,43 +47,50 @@ int main(int argc, char** argv)
 	SDL_Event e;
 	while (!quit)
 	{
-		
+		Console::resetAllSignal();
 		while (SDL_PollEvent(&e))
 		{
-			cout << hex << e.key.keysym.mod << "\n";
+			//cout << hex << e.key.keysym.mod << "\n";
 			switch (e.type)
 			{
 			case SDL_QUIT:
 				quit = true;
 			case SDL_KEYDOWN:
+				
 				Console::input(e.key);
 			}
 		}
-
+		
 		game->update();
 
 		SDL_RenderClear(renderer);
 		//game->update();
 		// draw map
 		int gSize = girdSize;
-		auto map = game->getMapPtr();
+		auto map = game->getMap();
 		int c = map->getSizeC(), r = map->getSizeR();
 		groundDesPos = { 0, 0, gSize, gSize };
 		for (; groundDesPos.y < c * gSize; groundDesPos.y += gSize)
 			for (groundDesPos.x = 0; groundDesPos.x < r * gSize; groundDesPos.x += gSize)
 				RenderImage(renderer, ground, groundDesPos, groundClip);
 		// draw maids
-		auto maids = game->getMaidSetPtr();
+		auto maids = game->getMaidSet();
 		for (auto maid : *maids)
 		{
 			//int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
 			SDL_Rect maidPos = { maid->getCoord().y- girdSize*0.5,maid->getCoord().x- girdSize*0.5, gSize, gSize };
 			RenderImage(renderer, maidTex, maidPos, characterClip[maid->getName()]);
 		}
-
+		//draw flan
+		auto flan = game->getFlan();
+		//stringstream ss;
+		//ss << (int)flan->getCoord().y - (int)girdSize/2 <<","<< (int)flan->getCoord().x - (int)girdSize/2;
+		//Console::add(ss.str());
+		SDL_Rect flanPos = { flan->getCoord().y - girdSize * 0.5,flan->getCoord().x - girdSize * 0.5, gSize, gSize };
+		RenderImage(renderer, maidTex, flanPos, characterClip[flan->getName()]);
 		// log 
 		Console::print(renderer);
-		
+		cout << Console::checkSignal("flanMoveUp") << endl;
 		//oscar
 		SDL_RenderCopy(renderer, oscar, NULL, &oscarLocation);
 

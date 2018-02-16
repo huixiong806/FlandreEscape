@@ -123,8 +123,15 @@ void Console::input(SDL_KeyboardEvent key)
 	
 		
 }
-
-bool Console::checkSignal(string str)
+void Console::resetAllSignal()
 {
-	return signal[str] ? signal[str] = false, true : false;
+	signal["flanMoveDown"] = false;
+	signal["flanMoveUp"] = false;
+	signal["flanMoveLeft"] = false;
+	signal["flanMoveRight"] = false;
+	signal["flanAttack"] = false;
+}
+bool Console::checkSignal(const string& str)
+{
+	return signal[str];
 }

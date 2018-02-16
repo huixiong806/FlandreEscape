@@ -46,7 +46,7 @@ void scene1(string AP, SDL_Renderer * renderer)
 		//game->update();
 		// draw map
 		int gSize = girdSize;
-		auto map = game->getMapPtr();
+		auto map = game->getMap();
 		int c = map->getSizeC(), r = map->getSizeR();
 		groundDesPos = { 0, 0, gSize, gSize };
 		for (; groundDesPos.y < c * gSize; groundDesPos.y += gSize)
@@ -54,7 +54,7 @@ void scene1(string AP, SDL_Renderer * renderer)
 				//RenderImage(renderer, ground, groundDesPos, groundClip);
 				SDL_RenderCopy(renderer, ground, &groundClip, &groundDesPos);
 		// draw maids
-		auto maids = game->getMaidSetPtr();
+		auto maids = game->getMaidSet();
 		for (auto maid : *maids)
 		{
 			//int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;

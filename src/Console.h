@@ -50,6 +50,8 @@ public:
 	// handle keyboard input
 	static void input(SDL_KeyboardEvent key);
 	// check signal
-	static bool checkSignal(string str);
+	static bool checkSignal(const string& str);
+	// reset signal
+	static void resetAllSignal();
 };
 #endif

@@ -13,22 +13,26 @@ void GameManager::loadGame(std::string fileName)
 	mFlan = std::make_shared<FlandreScarlet>();
 	InfoManager::bind(this->mFlan);
 	mMaidManager = std::make_shared<MaidManager>();
-	InfoManager::bind(mMaidManager->getMaidSetPtr());
+	InfoManager::bind(mMaidManager->getMaidSet());
 	InfoManager::bind(mMaidManager->getAlertPtr());
 }
 void GameManager::update()
 {
 	//maid manager执行回合操作
-	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maidSet = mMaidManager->getMaidSetPtr();
+	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> maidSet = mMaidManager->getMaidSet();
 	mFlan->update();
 	mMaidManager->update();
 	//std::cout << "MaidCount:" << maidSet->size() << std::endl;
 }
-std::shared_ptr<Map> GameManager::getMapPtr()
+std::shared_ptr<Map> GameManager::getMap()
 {
 	return mMap;
 }
-std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> GameManager::getMaidSetPtr()
+std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> GameManager::getMaidSet()
 {
-	return mMaidManager->getMaidSetPtr();
+	return mMaidManager->getMaidSet();
+}
+std::shared_ptr<FlandreScarlet> GameManager::getFlan()
+{
+	return mFlan;
 }

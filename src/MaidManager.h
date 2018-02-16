@@ -19,7 +19,7 @@ private:
 	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>>mMaidSet;
 public:
 	MaidManager();
-	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> getMaidSetPtr();
+	std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> getMaidSet();
 	std::shared_ptr<bool> getAlertPtr();
 	void addNewMaid(int pos);
 	void deleteMaid(std::shared_ptr<Maid> maid);

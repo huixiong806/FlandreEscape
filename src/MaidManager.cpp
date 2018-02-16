@@ -27,7 +27,7 @@ void MaidManager::turnOffAlert(MaidManagerStateType newState)
 	*mAlertIsOn = false;
 	this->mState = newState;
 }
-std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> MaidManager::getMaidSetPtr()
+std::shared_ptr<std::unordered_set<std::shared_ptr<Maid>>> MaidManager::getMaidSet()
 {
 	return mMaidSet;
 }
