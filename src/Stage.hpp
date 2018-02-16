@@ -1,14 +1,8 @@
 #pragma once
-#include"GameManager.h"
 #include <SDL2\SDL.h>
 #include <SDL2\SDL_ttf.h>
 #include <SDL2\SDL_image.h>
-#include <vector>
-#include <memory>
-#include "Log.hpp"
-#include "Toolset.hpp"
-#include "SpriteSheet.h"
-using namespace std;
+#include "Console.hpp"
 void scene1(string AP, SDL_Renderer * renderer)
 {
 	shared_ptr<GameManager>game;
@@ -57,19 +51,19 @@ void scene1(string AP, SDL_Renderer * renderer)
 		groundDesPos = { 0, 0, gSize, gSize };
 		for (; groundDesPos.y < c * gSize; groundDesPos.y += gSize)
 			for (groundDesPos.x = 0; groundDesPos.x < r * gSize; groundDesPos.x += gSize)
-				RenderImage(renderer, ground, groundDesPos, groundClip);
+				//RenderImage(renderer, ground, groundDesPos, groundClip);
+				SDL_RenderCopy(renderer, ground, &groundClip, &groundDesPos);
 		// draw maids
 		auto maids = game->getMaidSetPtr();
 		for (auto maid : *maids)
 		{
 			//int x = maid->getPos() / c * gSize, y = maid->getPos() % c * gSize;
 			SDL_Rect maidPos = { maid->getCoord().y - girdSize * 0.5,maid->getCoord().x - girdSize * 0.5, gSize, gSize };
-			RenderImage(renderer, maidTex, maidPos, maidClip[maid->getName()]);
+			SDL_RenderCopy(renderer, maidTex, &characterClip[maid->getName()], &maidPos);
 		}
 
 		// log 
-		auto message = game->getLog()->getLast(18);
-		RenderText(renderer, message, font, textColor, 10, 200);
+		Console::print(renderer);
 
 		//oscar
 		SDL_RenderCopy(renderer, oscar, NULL, &oscarLocation);
