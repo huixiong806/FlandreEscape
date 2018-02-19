@@ -57,5 +57,5 @@ public:
 	//通用 返回点是否是障碍
 	static bool vertexIsEnable(int pos);
 	//Flan 返回所有能看到的女仆
-	//std::vector<std::shared_ptr<Maid>> maidsInSight();
+	static std::vector<std::shared_ptr<Maid>> maidsInSight();
 };

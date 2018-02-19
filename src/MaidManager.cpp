@@ -83,12 +83,10 @@ void MaidManager::update()
 			Console::add(insruction.str());
 			Console::add(wayp.str());
 		}
-		
-
 		if (maid->dead())
 		{
 			deadMaid.push_back(maid);
-			InfoManager::getMap()->addBlood(maid->getPos(), 1);
+			InfoManager::getMap()->addBlood(maid->getPos(), 100);
 		}
 	}
 	//É¾³ýËÀÍöµÄÅ®ÆÍ

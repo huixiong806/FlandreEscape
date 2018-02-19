@@ -100,8 +100,7 @@ bool InfoManager::vertexIsEnable(int pos)
 	if (pos < 0||pos>=mMap->getSize())return false;
 	return mMap->getVertex(pos).getEnable();
 }
-/*
 std::vector<std::shared_ptr<Maid>> InfoManager::maidsInSight()
 {
-	//TODO:
-}*/
+	return mMap->getVertex(mFlan->getPos()).getMaidPool();
+}

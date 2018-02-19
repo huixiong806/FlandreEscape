@@ -21,6 +21,13 @@ void Vertex::addBlood(int val)
 {
 	mBlood += val;
 }
+std::vector<std::shared_ptr<Maid>> Vertex::getMaidPool()
+{
+	std::vector<std::shared_ptr<Maid>> res;
+	for (auto i : mMaid)
+		res.push_back(i);
+	return res;
+}
 std::vector<int> Map::getNearByVertexId(int id)
 {
 	std::vector<int> res;

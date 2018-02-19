@@ -23,6 +23,7 @@ public:
 	void addMaid(std::shared_ptr<Maid> maid);
 	bool getEnable() { return mEnable; }
 	void setEnable(bool enable) { mEnable= enable; }
+	std::vector<std::shared_ptr<Maid>> getMaidPool();
 };
 class Map
 {

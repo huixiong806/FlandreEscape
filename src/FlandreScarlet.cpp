@@ -4,7 +4,7 @@ FlandreScarlet::FlandreScarlet()
 	this->setName("Flandre");
 	this->setPos(0);
 	this->setCoord(InfoManager::getCoordByPos(0));
-	this->mSpeed = 2.0;
+	this->mSpeed = 2.5;
 }
 const int FlandreScarlet ::getHpLimit()
 {
@@ -20,7 +20,18 @@ const int FlandreScarlet::getHpRecoverPerTick()
 }
 void FlandreScarlet::update()
 {
-	//移动方向
+	//攻击
+	if (Console::checkSignal("flanAttack"))
+	{
+		auto maids=InfoManager::maidsInSight();
+		int size = maids.size();
+		if (size > 0)
+		{
+			auto maid = maids[rand() % size];
+			this->attack(*maid);
+		}
+	}
+	//移动
 	Vec2d direction=Vec2d(0,0);
 	if (Console::checkSignal("flanMoveUp"))
 		direction.x -= 1.0;
