@@ -37,17 +37,17 @@ std::shared_ptr<bool> MaidManager::getAlertPtr()
 }
 void MaidManager::update()
 {
-	//ÒÔÏÂÎª²âÊÔ´úÂë
-	//±£³Ö³¡ÉÏÓÐ3¸öÅ®ÆÍ
+	//ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½
+	//ï¿½ï¿½ï¿½Ö³ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½Å®ï¿½ï¿½
 	if(mMaidSet->size()<3)
 		this->addNewMaid(1);
-	//¶ÔÓÚËùÓÐÅ®ÆÍ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å®ï¿½ï¿½
 	for (auto& maid : *mMaidSet)
 	{
-		//Èç¹ûÄÄ¸öÏÐ×Å
+		//ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (maid->free())
 		{
-			//ÅÉÈ¥Ñ²Âß
+			//ï¿½ï¿½È¥Ñ²ï¿½ï¿½
 			int pos;
 			do
 			{
@@ -58,10 +58,10 @@ void MaidManager::update()
 		else maid->receiveInstruction(Instruction(InstructionType::NUL, std::vector<int>()));
 	}
 	std::vector<std::shared_ptr<Maid>>deadMaid;
-	//Ã¿¸öÅ®ÆÍÖ´ÐÐ»ØºÏ²Ù×÷
+	//Ã¿ï¿½ï¿½Å®ï¿½ï¿½Ö´ï¿½Ð»ØºÏ²ï¿½ï¿½ï¿½
 	for (auto& maid : *mMaidSet)
 	{
-		//std::cout << maid.use_count() <<std:: endl; Êä³ö3
+		//std::cout << maid.use_count() <<std:: endl; ï¿½ï¿½ï¿½3
 		MaidInfoType maidInfo=maid->update();
 		if (maidInfo == MaidInfoType::ALERT)
 			this->turnOnAlert();
@@ -89,7 +89,7 @@ void MaidManager::update()
 			InfoManager::getMap()->addBlood(maid->getPos(), 100);
 		}
 	}
-	//É¾³ýËÀÍöµÄÅ®ÆÍ
+	//É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å®ï¿½ï¿½
 	for (auto& maid : deadMaid)
 		this->deleteMaid(maid);
 	if (mAlertIsOn)
@@ -99,4 +99,3 @@ void MaidManager::update()
 		else turnOffAlert(MaidManagerStateType::NORMAL);
 	}
 }
-Console;
